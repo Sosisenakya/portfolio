@@ -230,18 +230,6 @@ dd {
   box-shadow: 0 0 60px rgba(143, 123, 255, 0.25), inset 0 0 60px rgba(88, 160, 255, 0.12);
 }
 
-.orbit-warp {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, transparent, rgba(143, 123, 255, 0.9), rgba(88, 160, 255, 0.9), transparent 70%);
-  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%, #000 70%, transparent 72%);
-  mask: radial-gradient(circle, transparent 62%, #000 64%, #000 70%, transparent 72%);
-  opacity: 0;
-  transition: opacity 0.4s;
-  animation: orbit-spin 4s linear infinite;
-}
-
 .orbit-label {
   color: var(--text-soft);
   font-size: 1.5rem;
@@ -252,31 +240,16 @@ dd {
 }
 
 .orbit-two:hover {
-  transform: scale(1.12) rotate(-8deg);
+  transform: scale(1.08);
   border-style: solid;
   border-color: rgba(143, 123, 255, 0.9);
   box-shadow: 0 0 40px rgba(143, 123, 255, 0.45), inset 0 0 40px rgba(88, 160, 255, 0.25);
-  filter: url(#warp);
-}
-
-.orbit-two:hover .orbit-warp {
-  opacity: 1;
 }
 
 .orbit-two:hover .orbit-label {
   opacity: 1;
   letter-spacing: 0.16em;
   text-shadow: 0 0 18px rgba(143, 123, 255, 0.9);
-}
-
-.warp-defs {
-  position: absolute;
-}
-
-@keyframes orbit-spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .hero-inner {
@@ -682,13 +655,5 @@ h3 {
   .btn,
   .card {
     transition: none;
-  }
-
-  .orbit-warp {
-    animation: none;
-  }
-
-  .orbit-two:hover {
-    filter: none;
   }
 }

@@ -90,15 +90,9 @@ dd {
 }
 
 .brand-mark {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  background:
-    radial-gradient(circle at 30% 30%, #fff 0 1px, transparent 2px),
-    radial-gradient(circle at 70% 60%, #fff 0 1px, transparent 2px),
-    radial-gradient(circle at 45% 80%, #cdbdff 0 1px, transparent 2px),
-    linear-gradient(135deg, #3a1f8a, #12306e);
+  display: block;
+  width: 34px;
+  height: 34px;
 }
 
 .brand-dot {

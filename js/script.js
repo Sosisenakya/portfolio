@@ -19,6 +19,14 @@ navLinks.addEventListener("click", (event) => {
 // Work tabs
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabPanels = document.querySelectorAll(".tab-panel");
+const tabIndicator = document.querySelector(".tab-indicator");
+
+function moveTabIndicator() {
+  const active = document.querySelector(".tab-btn.active");
+  tabIndicator.style.width = active.offsetWidth + "px";
+  tabIndicator.style.height = active.offsetHeight + "px";
+  tabIndicator.style.transform = `translate(${active.offsetLeft}px, ${active.offsetTop}px)`;
+}
 
 tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -32,8 +40,20 @@ tabButtons.forEach((button) => {
       panel.classList.toggle("active", active);
       panel.hidden = !active;
     });
+    moveTabIndicator();
   });
 });
+
+// Place the indicator without animating on load, then enable the tween
+tabIndicator.style.transition = "none";
+moveTabIndicator();
+document.fonts.ready.then(() => {
+  moveTabIndicator();
+  requestAnimationFrame(() => {
+    tabIndicator.style.transition = "";
+  });
+});
+window.addEventListener("resize", moveTabIndicator);
 
 // Starfield background
 const canvas = document.getElementById("stars");

@@ -10,6 +10,7 @@
   --blue: #4f8dff;
   --accent: #8f7bff;
   --accent-ink: #0a0b1e;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --gradient: linear-gradient(100deg, #b98cff 0%, #8f7bff 45%, #58a0ff 100%);
   --pad-x: clamp(20px, 4.3vw, 55px);
 }
@@ -140,11 +141,16 @@ dd {
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.45s var(--spring), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.95);
+  transition-duration: 0.12s;
 }
 
 .btn-primary {
@@ -462,6 +468,7 @@ h3 {
 /* Work */
 
 .tabs {
+  position: relative;
   display: inline-flex;
   flex-wrap: wrap;
   gap: 4px;
@@ -482,20 +489,54 @@ h3 {
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
+  transition: color 0.3s ease, transform 0.4s var(--spring);
+}
+
+.tab-btn {
+  position: relative;
+  z-index: 1;
 }
 
 .tab-btn:hover {
   color: var(--text);
+  transform: translateY(-1px);
+}
+
+.tab-btn:active {
+  transform: scale(0.94);
+  transition-duration: 0.12s;
 }
 
 .tab-btn.active {
-  background: var(--surface);
   color: var(--text);
+}
+
+/* Sliding highlight that tweens between tabs; positioned by script.js */
+.tab-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 6px;
+  background: var(--surface);
   box-shadow: 0 0 0 1px var(--border);
+  transition: transform 0.5s var(--spring), width 0.5s var(--spring), height 0.5s var(--spring);
+  pointer-events: none;
 }
 
 .tab-panel[hidden] {
   display: none;
+}
+
+.tab-panel.active {
+  animation: panel-in 0.5s var(--spring) both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
 }
 
 .project-card {
@@ -653,7 +694,13 @@ h3 {
   }
 
   .btn,
-  .card {
+  .card,
+  .tab-btn,
+  .tab-indicator {
     transition: none;
+  }
+
+  .tab-panel.active {
+    animation: none;
   }
 }

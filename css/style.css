@@ -26,7 +26,7 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(900px 600px at 85% -10%, rgba(79, 141, 255, 0.16), transparent 60%),
+    radial-gradient(900px 600px at 15% -10%, rgba(79, 141, 255, 0.16), transparent 60%),
     radial-gradient(800px 600px at 10% 30%, rgba(160, 107, 255, 0.12), transparent 60%),
     var(--bg);
   background-attachment: fixed;
@@ -194,10 +194,11 @@ dd {
 .orbit {
   position: absolute;
   z-index: -1;
-  border: 1px solid rgba(160, 150, 255, 0.28);
+  border: 1px dashed rgba(160, 150, 255, 0.4);
   border-radius: 50%;
 }
 
+/* Lua-logo layout: small circle sits on the big circle's edge at 45° (upper right) */
 .orbit-one {
   top: 18%;
   right: 8%;
@@ -206,11 +207,11 @@ dd {
 }
 
 .orbit-two {
-  top: 30%;
-  right: -4%;
-  width: 240px;
-  height: 240px;
-  border-color: rgba(88, 160, 255, 0.24);
+  top: calc(18% - 5px);
+  right: calc(8% - 5px);
+  width: 110px;
+  height: 110px;
+  border-color: rgba(88, 160, 255, 0.5);
 }
 
 .hero-inner {

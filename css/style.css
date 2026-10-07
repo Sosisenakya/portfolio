@@ -20,6 +20,11 @@
 
 html {
   scroll-padding-top: 72px;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -200,14 +205,14 @@ dd {
 /* Lua-logo layout: small circle sits on the big circle's edge at 45° (upper right) */
 .orbit-one {
   top: 18%;
-  right: 8%;
+  left: 3%;
   width: 340px;
   height: 340px;
 }
 
 .orbit-two {
   top: calc(18% - 35px);
-  right: calc(8% - 35px);
+  left: calc(3% + 205px);
   z-index: 0;
   display: grid;
   place-items: center;
@@ -252,7 +257,15 @@ dd {
 }
 
 .hero-inner {
+  position: relative;
+  z-index: 1;
   max-width: 720px;
+}
+
+@media (min-width: 900px) {
+  .hero-inner {
+    margin-left: clamp(0px, 30vw, 520px);
+  }
 }
 
 h1 {

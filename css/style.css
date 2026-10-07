@@ -676,3 +676,23 @@ h3 {
     transition: none;
   }
 }
+
+/* Showcases */
+
+.showcase-title {
+  margin: 8px 0 16px;
+  color: var(--text-soft);
+  font-size: 1.1rem;
+}
+
+.tab-panel .grid + .showcase-title {
+  margin-top: 40px;
+}
+
+.project-thumb-fit {
+  background: #0a0c1f;
+}
+
+.project-thumb-fit img {
+  object-fit: contain;
+}

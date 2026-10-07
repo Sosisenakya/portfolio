@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
@@ -117,7 +117,7 @@
             <div class="project-body">
               <span class="project-tag">Scripting</span>
               <h3>Wheelie District</h3>
-              <p>A vehicle game with 80M+ visits. I made the pre-launch version as a one-time commission. I built a vehicle physics system with built-in wheelie mechanics, alongside core gameplay features like shop, garage, income system</p>
+              <p>A vehicle game with 80M+ visits. I built a vehicle physics system with built-in wheelie mechanics, alongside core gameplay features</p>
               <a class="btn btn-secondary" href="https://www.roblox.com/games/89490838554710/Wheelie-District" target="_blank" rel="noopener">Play on Roblox</a>
             </div>
           </article>
@@ -146,28 +146,68 @@
         </div>
 
         <!-- EDIT: copy one <article> per project inside the matching panel -->
-        <div class="grid grid-3 tab-panel" data-panel="showcases" hidden>
-          <article class="card project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <div class="project-body">
-              <h3>Combat system</h3>
-              <p>A server-authoritative combat framework with hit detection, abilities, cooldowns and animations for a battleground-style game.</p>
-            </div>
-          </article>
-          <article class="card project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <div class="project-body">
-              <h3>Animated UI kit</h3>
-              <p>A set of responsive menus, shops and inventories with tweened transitions that scale cleanly from phone to desktop.</p>
-            </div>
-          </article>
-          <article class="card project-card">
-            <div class="project-thumb" aria-hidden="true"></div>
-            <div class="project-body">
-              <h3>Incremental game systems</h3>
-              <p>Data saving, upgrades, currencies and progression for a game with 60M+ visits, built to handle large player counts.</p>
-            </div>
-          </article>
+        <div class="tab-panel" data-panel="showcases" hidden>
+          <h3 class="showcase-title">Scripting</h3>
+          <div class="grid grid-3">
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/scripting-push-game.webp" alt="Push game with a push log, progress bar, event timer and upgrades" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Push game</h3>
+                <p>A game where players push each other for distance. I scripted the push log, the progress bar, events, upgrades and the auto click.</p>
+              </div>
+            </article>
+          </div>
+
+          <h3 class="showcase-title">UI</h3>
+          <div class="grid grid-3">
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/ui-bike-shop.png" alt="Bike shop screen showing a green Kawasaki Ninja 650 with its stats and price" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Bike shop</h3>
+                <p>A shop screen for picking a bike, with its price, class and stat bars. Players flick through bikes with Q and E.</p>
+              </div>
+            </article>
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/ui-weapon-select.webp" alt="Weapon select screen showing an assault rifle with power and stat bars" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Weapon select</h3>
+                <p>A loadout screen to browse guns by type, check their stats and see which ones you own.</p>
+              </div>
+            </article>
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/ui-quest-menu.webp" alt="Purple quest menu with main, daily and weekly tabs and a rewards list" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Quest menu</h3>
+                <p>A quest window with Main, Daily and Weekly tabs, progress bars and a list of rewards.</p>
+              </div>
+            </article>
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/ui-shop-inventory.webp" alt="Shop, index, inventory and settings windows in one colourful style" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Shop, index and inventory</h3>
+                <p>A set of matching windows: a shop, a collection index, an inventory and a settings menu.</p>
+              </div>
+            </article>
+            <article class="card project-card">
+              <div class="project-thumb project-thumb-fit">
+                <img src="assets/showcases/ui-tower-loadout.webp" alt="Sci-fi tower loadout screen with a tower inventory and details panel" loading="lazy">
+              </div>
+              <div class="project-body">
+                <h3>Tower loadout</h3>
+                <p>A sci-fi menu for choosing which towers to bring into a match, with categories, details and a team list.</p>
+              </div>
+            </article>
+          </div>
         </div>
 
         <div class="grid grid-3 tab-panel" data-panel="open-source" hidden>

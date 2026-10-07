@@ -539,8 +539,17 @@ h3 {
   padding: 22px;
 }
 
+/* Stretch the body so buttons line up along the bottom of every card */
+.project-body {
+  flex: 1;
+}
+
+.project-body p:has(+ .btn) {
+  margin-bottom: 12px;
+}
+
 .project-body .btn {
-  margin-top: 12px;
+  margin-top: auto;
 }
 
 /* Services */

@@ -37,7 +37,7 @@
 
     <div class="hero-inner">
       <h1>Sosisenakya<br>Roblox Developer</h1>
-      <p class="lead">I have been developing on Roblox for 4 years, and have contributed to 60M+ Visits! I mainly do Scripting and UI</p>
+      <p class="lead">I have been developing on Roblox for 4 years, and have contributed to 80M+ Visits! I mainly do Scripting and UI</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contact">Start a project</a>
         <a class="btn btn-ghost" href="#work">See my work ↓</a>
@@ -54,22 +54,22 @@
         <div class="about-grid">
           <div class="prose">
             <!-- EDIT: about you -->
-            <p>I'm a Roblox developer focused on scripting and UI. Over the past 4 years I've worked on games that have gathered 60M+ visits, building everything from gameplay systems to the interfaces players interact with every day.</p>
-            <p>I care about code that is organised, fast and easy for a team to extend later, and about UI that feels polished and responsive. I work closely with owners and other developers, and I'm comfortable taking a feature from a rough idea to a finished, tested system.</p>
+            <p>I'm a Roblox developer focused on scripting and UI. Over the past 4 years I've worked on games that have gathered 60M+ visits, building everything from gameplay systems to the interfaces players interact with every day</p>
+            <p>I care about code that is organised, fast and easy for a team to extend later. I'm comfortable taking a feature from a rough idea to a finished, tested system</p>
           </div>
           <!-- EDIT: quick facts -->
           <dl class="facts">
             <div>
               <dt>Timezone</dt>
-              <dd>UTC+0 (flexible)</dd>
+              <dd>GMT+7 (flexible)</dd>
             </div>
             <div>
               <dt>Working hours</dt>
-              <dd>Weekdays 4 PM – 11 PM, weekends flexible</dd>
+              <dd>4 PM – 11 PM</dd>
             </div>
             <div>
               <dt>Services</dt>
-              <dd>Scripting, UI, game systems</dd>
+              <dd>Scripting, UI</dd>
             </div>
           </dl>
         </div>
@@ -104,13 +104,49 @@
       <div class="container">
         <h2>Work</h2>
         <div class="tabs" role="tablist">
-          <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="showcases">Showcases</button>
+          <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="projects">Projects</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="showcases">Showcases</button>
           <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="open-source">Open-source projects</button>
-          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="other">Other work</button>
+        </div>
+
+        <div class="grid grid-3 tab-panel active" data-panel="projects">
+          <article class="card project-card">
+            <div class="project-thumb">
+              <img src="assets/projects/wheelie-district.png" alt="First-person view of a blue dirt bike in Wheelie District" loading="lazy">
+            </div>
+            <div class="project-body">
+              <span class="project-tag">Scripting</span>
+              <h3>Wheelie District</h3>
+              <p>A bike game with 80M+ visits. I made the pre-launch version as a one-time commission.</p>
+              <a class="btn btn-secondary" href="https://www.roblox.com/games/89490838554710/Wheelie-District" target="_blank" rel="noopener">Play on Roblox</a>
+            </div>
+          </article>
+          <article class="card project-card">
+            <div class="project-thumb">
+              <img src="assets/projects/brainrot-chest-rng.webp" alt="Poor versus rich characters opening chests in Brainrot Chest RNG" loading="lazy">
+            </div>
+            <div class="project-body">
+              <span class="project-tag">Scripting</span>
+              <h3>Brainrot Chest RNG</h3>
+              <p>A simple simulator game. I kept the code clean and easy to work with, made saving player data safe, and made sure it runs smoothly.</p>
+              <a class="btn btn-secondary" href="https://www.roblox.com/games/80967681326780/Brainrot-Chest-RNG" target="_blank" rel="noopener">Play on Roblox</a>
+            </div>
+          </article>
+          <article class="card project-card">
+            <div class="project-thumb">
+              <img src="assets/projects/bubble-shooting-incremental.png" alt="Bubble Shooting Incremental title screen" loading="lazy" onerror="this.remove()">
+            </div>
+            <div class="project-body">
+              <span class="project-tag">UI &amp; Scripting</span>
+              <h3>Bubble Shooting Incremental</h3>
+              <p>A more open project where I did the UI and scripting and helped with game ideas. I built the whole Space Realm from scratch, starting from a rough idea.</p>
+              <a class="btn btn-secondary" href="https://www.roblox.com/games/95015499414027/BubBle-ShoOting-incrEmentAl" target="_blank" rel="noopener">Play on Roblox</a>
+            </div>
+          </article>
         </div>
 
         <!-- EDIT: copy one <article> per project inside the matching panel -->
-        <div class="grid grid-3 tab-panel active" data-panel="showcases">
+        <div class="grid grid-3 tab-panel" data-panel="showcases" hidden>
           <article class="card project-card">
             <div class="project-thumb" aria-hidden="true"></div>
             <div class="project-body">
@@ -159,7 +195,7 @@
     <section class="section section-muted" id="services">
       <div class="container">
         <div class="section-head">
-          <h2>Services and pricing</h2>
+          <h2>Services</h2>
         </div>
         <div class="grid grid-2">
           <div>
@@ -179,24 +215,6 @@
             </ul>
           </div>
         </div>
-
-        <div class="grid grid-3 price-grid">
-          <article class="card price-card">
-            <h3>UI scripting</h3>
-            <p>Turning your designs into responsive, animated interfaces.</p>
-            <p class="price">$25+</p>
-          </article>
-          <article class="card price-card">
-            <h3>Gameplay systems</h3>
-            <p>Combat, abilities, inventories, shops and data saving.</p>
-            <p class="price">$60+</p>
-          </article>
-          <article class="card price-card">
-            <h3>Optimisation and anti-cheat</h3>
-            <p>Profiling slow code and securing your game against exploiters.</p>
-            <p class="price">$40+</p>
-          </article>
-        </div>
       </div>
     </section>
 
@@ -209,21 +227,21 @@
             <span class="card-number">1.</span>
             <div>
               <h3>Send an overview</h3>
-              <p>Tell me what you need, with references, a budget range and a deadline. I'll reply with questions and whether it's a good fit.</p>
+              <p>Tell me what you need, with references, a budget range and a deadline. I'll reply with questions and whether it's a good fit</p>
             </div>
           </li>
           <li>
             <span class="card-number">2.</span>
             <div>
               <h3>Agree on scope and price</h3>
-              <p>We settle the features, milestones, total cost and payment terms before any work begins.</p>
+              <p>We settle the features, milestones, total cost and payment terms before any work begins</p>
             </div>
           </li>
           <li>
             <span class="card-number">3.</span>
             <div>
               <h3>Build, review and deliver</h3>
-              <p>I share progress along the way, take your feedback, then hand over tested, documented code.</p>
+              <p>I share progress along the way, take your feedback, then hand over the finished project/code</p>
             </div>
           </li>
         </ol>

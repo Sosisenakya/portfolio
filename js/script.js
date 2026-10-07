@@ -16,17 +16,54 @@ navLinks.addEventListener("click", (event) => {
   }
 });
 
+// Tweened scroll for in-page links (nav tabs and hero buttons)
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let scrollFrame = 0;
+
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function tweenScrollTo(targetY) {
+  cancelAnimationFrame(scrollFrame);
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  if (reduceMotion.matches || Math.abs(distance) < 2) {
+    window.scrollTo(0, targetY);
+    return;
+  }
+  const duration = Math.min(1400, 600 + Math.abs(distance) * 0.25);
+  const startTime = performance.now();
+
+  function step(now) {
+    const t = Math.min((now - startTime) / duration, 1);
+    window.scrollTo(0, startY + distance * easeInOutCubic(t));
+    if (t < 1) scrollFrame = requestAnimationFrame(step);
+  }
+  scrollFrame = requestAnimationFrame(step);
+}
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link) return;
+  const id = link.getAttribute("href").slice(1);
+  const target = id ? document.getElementById(id) : document.documentElement;
+  if (!target) return;
+  event.preventDefault();
+  const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const y = id ? target.getBoundingClientRect().top + window.scrollY - offset : 0;
+  tweenScrollTo(Math.max(0, y));
+  history.pushState(null, "", id ? "#" + id : window.location.pathname);
+});
+
+// Stop the tween if the user scrolls manually
+["wheel", "touchstart"].forEach((type) =>
+  window.addEventListener(type, () => cancelAnimationFrame(scrollFrame), { passive: true })
+);
+
 // Work tabs
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabPanels = document.querySelectorAll(".tab-panel");
-const tabIndicator = document.querySelector(".tab-indicator");
-
-function moveTabIndicator() {
-  const active = document.querySelector(".tab-btn.active");
-  tabIndicator.style.width = active.offsetWidth + "px";
-  tabIndicator.style.height = active.offsetHeight + "px";
-  tabIndicator.style.transform = `translate(${active.offsetLeft}px, ${active.offsetTop}px)`;
-}
 
 tabButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -40,20 +77,8 @@ tabButtons.forEach((button) => {
       panel.classList.toggle("active", active);
       panel.hidden = !active;
     });
-    moveTabIndicator();
   });
 });
-
-// Place the indicator without animating on load, then enable the tween
-tabIndicator.style.transition = "none";
-moveTabIndicator();
-document.fonts.ready.then(() => {
-  moveTabIndicator();
-  requestAnimationFrame(() => {
-    tabIndicator.style.transition = "";
-  });
-});
-window.addEventListener("resize", moveTabIndicator);
 
 // Starfield background
 const canvas = document.getElementById("stars");

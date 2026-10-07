@@ -694,7 +694,7 @@ h3 {
 }
 
 .project-thumb-fit img {
-  object-fit: contain;
+  object-fit: cover;
 }
 
 /* Video (click to load) */

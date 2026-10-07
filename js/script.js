@@ -17,7 +17,6 @@ navLinks.addEventListener("click", (event) => {
 });
 
 // Tweened scroll for in-page links (nav tabs and hero buttons)
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let scrollFrame = 0;
 
 function easeInOutCubic(t) {
@@ -28,7 +27,7 @@ function tweenScrollTo(targetY) {
   cancelAnimationFrame(scrollFrame);
   const startY = window.scrollY;
   const distance = targetY - startY;
-  if (reduceMotion.matches || Math.abs(distance) < 2) {
+  if (Math.abs(distance) < 2) {
     window.scrollTo(0, targetY);
     return;
   }

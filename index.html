@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=8">
+  <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
@@ -107,6 +107,7 @@
           <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="projects">Projects</button>
           <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="showcases">Showcases</button>
           <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="open-source">Open-source projects</button>
+          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="video">Video</button>
         </div>
 
         <div class="grid grid-3 tab-panel active" data-panel="projects">
@@ -210,6 +211,15 @@
           </div>
         </div>
 
+        <div class="tab-panel" data-panel="video" hidden>
+          <div class="video-frame">
+            <button class="video-facade" type="button" data-video-id="h00i7rxZFl8" aria-label="Play video">
+              <img src="https://i.ytimg.com/vi/h00i7rxZFl8/hqdefault.jpg" alt="Video thumbnail" loading="lazy">
+              <span class="video-play" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
         <div class="grid grid-3 tab-panel" data-panel="open-source" hidden>
           <article class="card project-card">
             <div class="project-body">
@@ -306,6 +316,6 @@
     <p>&copy; <span id="year"></span> Sosisenakya</p>
   </footer>
 
-  <script src="js/script.js?v=4"></script>
+  <script src="js/script.js?v=5"></script>
 </body>
 </html>

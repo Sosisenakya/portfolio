@@ -109,3 +109,50 @@ window.addEventListener("resize", () => {
 });
 
 drawStars();
+
+// Click-to-play YouTube video: only loads the player after a click
+document.querySelectorAll(".video-facade").forEach((facade) => {
+  facade.addEventListener("click", () => {
+    const frame = document.createElement("iframe");
+    frame.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.videoId}?autoplay=1&rel=0`;
+    frame.title = "Video";
+    frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    frame.allowFullscreen = true;
+    facade.replaceWith(frame);
+  });
+});
+
+// Click a project image to enlarge it
+document.querySelectorAll(".project-thumb img").forEach((image) => {
+  image.tabIndex = 0;
+  image.setAttribute("role", "button");
+
+  const open = () => {
+    const overlay = document.createElement("div");
+    overlay.className = "lightbox";
+    const big = document.createElement("img");
+    big.src = image.currentSrc || image.src;
+    big.alt = image.alt;
+    overlay.appendChild(big);
+
+    const close = () => {
+      overlay.remove();
+      document.removeEventListener("keydown", onKey);
+      image.focus();
+    };
+    const onKey = (event) => {
+      if (event.key === "Escape") close();
+    };
+    overlay.addEventListener("click", close);
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(overlay);
+  };
+
+  image.addEventListener("click", open);
+  image.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      open();
+    }
+  });
+});

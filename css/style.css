@@ -163,6 +163,7 @@ dd {
 
 .btn-primary {
   background: var(--gradient);
+  background-origin: border-box;
   color: var(--accent-ink);
   box-shadow: 0 0 24px rgba(143, 123, 255, 0.35);
 }

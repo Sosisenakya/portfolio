@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sosisenakya</title>
+  <meta name="description" content="Portfolio of Sosisenakya.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top">Sosisenakya</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">Portfolio</p>
+      <h1>Hi, I'm Sosisenakya.</h1>
+      <!-- EDIT: one sentence about what you do -->
+      <p class="lead">Write one sentence here about what you make.</p>
+      <a class="button" href="#projects">See my work</a>
+    </section>
+
+    <section id="about">
+      <h2>About</h2>
+      <!-- EDIT: a short paragraph about you -->
+      <p>A short paragraph about who you are, what you work on, and what you're interested in.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        <!-- EDIT: copy one <article> block per project -->
+        <article class="card">
+          <h3>Project name</h3>
+          <p>What it is and what you did on it.</p>
+          <a href="#">View project</a>
+        </article>
+        <article class="card">
+          <h3>Project name</h3>
+          <p>What it is and what you did on it.</p>
+          <a href="#">View project</a>
+        </article>
+        <article class="card">
+          <h3>Project name</h3>
+          <p>What it is and what you did on it.</p>
+          <a href="#">View project</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <!-- EDIT: add the links you want people to use -->
+      <ul class="links">
+        <li><a href="https://github.com/Sosisenakya">GitHub</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Sosisenakya</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

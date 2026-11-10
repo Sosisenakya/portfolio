@@ -76,6 +76,7 @@ body {
   color: var(--bone);
   font: 400 1.0625rem/1.7 var(--font-mono);
   -webkit-font-smoothing: antialiased;
+  caret-color: transparent; /* no text fields here, so never show a blinking text cursor (e.g. with caret browsing on) */
 }
 
 img, svg { display: block; max-width: 100%; }

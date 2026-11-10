@@ -1,12 +1,11 @@
-// Everything in the Evidence section: folder tabs, the string on the case board,
-// grease-pencil circles on the contact sheet, the photo viewer and the surveillance tape
+// Everything in the Evidence section: folder tabs, the string on the project board,
+// the photo viewer and the surveillance tape
 
 import { sfx } from "../core/audio.js";
 
 export function initEvidence() {
   initTabs();
   initBoard();
-  initContactSheet();
   initViewer();
   initTape();
 }
@@ -90,14 +89,6 @@ function initBoard() {
   document.addEventListener("evidence:tab", draw);
   board.querySelectorAll("img").forEach((img) => img.addEventListener("load", draw));
   draw();
-}
-
-// ---- Contact sheet: a grease-pencil circle that draws itself on hover ----
-function initContactSheet() {
-  const mark =
-    '<svg class="frame-mark" viewBox="0 0 100 70" preserveAspectRatio="none" aria-hidden="true">' +
-    '<path pathLength="1" d="M12 33C9 16 31 6 55 6s40 10 40 27-18 31-46 31S4 55 7 37c1-6 6-12 14-16"/></svg>';
-  document.querySelectorAll(".frame-img").forEach((frame) => frame.insertAdjacentHTML("beforeend", mark));
 }
 
 // ---- Photo viewer (any img with data-zoom) ----

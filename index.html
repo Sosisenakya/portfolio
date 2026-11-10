@@ -68,7 +68,7 @@
       <div class="door-plate">
         <p class="door-kicker">Department of Roblox Development</p>
         <p class="door-title" id="intro-title">Case file</p>
-        <p class="door-meta">No. 0417 &middot; Subject: Sosisenakya</p>
+        <p class="door-meta">No. 6767 &middot; Subject: Sosisenakya</p>
       </div>
       <div class="lock-face" aria-hidden="true">
         <span class="lock-cylinder"><svg class="lock-hole" viewBox="0 0 24 40"><use href="#i-keyhole"/></svg></span>
@@ -87,6 +87,9 @@
         <p class="door-warning">Evidence room &middot; Authorized personnel only</p>
       </div>
     </div>
+
+    <span class="bolt bolt--left" aria-hidden="true"></span>
+    <span class="bolt bolt--right" aria-hidden="true"></span>
 
     <button class="lock-button" type="button" data-lock aria-label="Turn the key and open the case file"></button>
 
@@ -207,13 +210,13 @@
 
       <div class="drawer" data-reveal>
         <div class="folder-tabs" role="tablist" aria-label="Evidence">
-          <button class="folder-tab" type="button" role="tab" id="tab-cases" aria-controls="panel-cases" aria-selected="true">Cases <small data-count></small></button>
-          <button class="folder-tab" type="button" role="tab" id="tab-exhibits" aria-controls="panel-exhibits" aria-selected="false" tabindex="-1">Exhibits <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-cases" aria-controls="panel-cases" aria-selected="true">Projects <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-exhibits" aria-controls="panel-exhibits" aria-selected="false" tabindex="-1">UI record <small data-count></small></button>
           <button class="folder-tab" type="button" role="tab" id="tab-records" aria-controls="panel-records" aria-selected="false" tabindex="-1">Public records <small data-count></small></button>
           <button class="folder-tab" type="button" role="tab" id="tab-tape" aria-controls="panel-tape" aria-selected="false" tabindex="-1">Surveillance tape <small data-count></small></button>
         </div>
 
-        <!-- Cases: projects pinned to a board, strings are drawn by js/features/evidence.js
+        <!-- Projects: pinned to a board, strings are drawn by js/features/evidence.js
              EDIT: copy one <article class="exhibit"> per project, letters A, B, C... are automatic -->
         <div class="drawer-panel" role="tabpanel" id="panel-cases" aria-labelledby="tab-cases">
           <div class="board" data-board>
@@ -265,16 +268,16 @@
           </div>
         </div>
 
-        <!-- Exhibits: UI showcases on a photo contact sheet, frame numbers are automatic
+        <!-- UI record: UI work on a photo contact sheet, frame numbers are automatic
              EDIT: copy one <figure class="frame"> per showcase -->
         <div class="drawer-panel" role="tabpanel" id="panel-exhibits" aria-labelledby="tab-exhibits" hidden>
-          <p class="roll-label"><span>Roll 01</span> UI work</p>
+          <p class="roll-label"><span>Roll 01</span> Interfaces I designed and built in Roblox, from layout to the tweens and the code behind them</p>
           <div class="contact-sheet">
             <figure class="frame" data-item>
-              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/scripting-push-game.webp" alt="Push game with a push log, progress bar, event timer and upgrades" loading="lazy" data-zoom></div></div>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/scripting-push-game.webp" alt="Push game HUD with a push log, progress bar, event timer and upgrade buttons" loading="lazy" data-zoom></div></div>
               <figcaption>
-                <h3 class="hand">Push game</h3>
-                <p>A game where players push each other for distance<br>I scripted the push log, the progress bar, events, upgrades and the auto click</p>
+                <h3 class="hand">Push game HUD</h3>
+                <p>The in-game HUD for a pushing game: a live push log, a distance progress bar, an event timer and the upgrade and auto-click buttons, all wired up to the game</p>
               </figcaption>
             </figure>
             <figure class="frame" data-item>
@@ -317,11 +320,29 @@
 
         <!-- Public records: open-source work -->
         <div class="drawer-panel" role="tabpanel" id="panel-records" aria-labelledby="tab-records" hidden>
-          <article class="paper record" data-item>
-            <p class="record-kind">Public record &middot; Open source</p>
-            <h3>Luau utility modules</h3>
-            <p>A small collection of reusable Luau modules for signals, state handling and UI animation, free to use in your own games</p>
-            <a class="case-link" href="https://github.com/Sosisenakya" target="_blank" rel="noopener">View the source <span aria-hidden="true">&nearr;</span></a>
+          <!-- EDIT: open-source projects, copy one <article class="record"> per project -->
+          <article class="record" data-item>
+            <figure class="photo record-shot">
+              <img class="photo-img" src="assets/opensources/whisper-code.png" alt="Whisper type definitions: Batch, Response, the Whisper API and middleware types" loading="lazy" data-zoom>
+              <figcaption class="hand">fully typed API</figcaption>
+            </figure>
+            <div class="paper record-sheet">
+              <p class="record-kind">Public record &middot; Open source &middot; Luau</p>
+              <h3>Whisper</h3>
+              <p>A wrapper around Roblox's MessagingService for talking between servers. It takes care of the rate limits and edge cases so you just queue a message and listen for it, fully type-checked</p>
+              <ul class="record-points">
+                <li><b>Priority queue</b> urgent messages go out first, add your own levels</li>
+                <li><b>Auto batching</b> packs several messages into one payload to stay under the rate limits</li>
+                <li><b>Middleware</b> compress, encrypt or filter data on the way in or out</li>
+                <li><b>Retries and de-duplication</b> failed sends retry, repeated messages are dropped</li>
+                <li><b>Safe shutdown</b> pending messages are flushed before the server closes</li>
+                <li><b>Zero dependencies</b> install with Wally or drop the folder in</li>
+              </ul>
+              <div class="record-links">
+                <a class="case-link" href="https://devforum.roblox.com/t/whisper-messaging-service-wrapper/4531427" target="_blank" rel="noopener">DevForum post <span aria-hidden="true">&nearr;</span></a>
+                <a class="case-link" href="https://github.com/Sosisenakya/Whisper" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">&nearr;</span></a>
+              </div>
+            </div>
           </article>
         </div>
 

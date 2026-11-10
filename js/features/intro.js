@@ -6,18 +6,25 @@
 import { sfx } from "../core/audio.js";
 import { tween, wait, ease, lerp } from "../core/util.js";
 
+// The key goes in nearly head-on at this angle (deg); -90 would point straight into the screen
+const INSERT_ANGLE = -75;
+const INSERT_DEPTH = 120; // px of shaft that ends up inside the lock, only the collar and bow stay out
+
+// Where the tip sits when it is `depth` px along its own shaft into the keyhole (negative = still outside)
+function along(depth) {
+  const a = (INSERT_ANGLE * Math.PI) / 180;
+  return { x: -depth * Math.cos(a), y: 0, z: depth * Math.sin(a) };
+}
+
 // Key poses, measured from the keyhole in px. rx turns the key around its own shaft
 const POSES = {
   idle: () => (innerWidth < 640
     ? { x: -64, y: 168, z: 30, rz: -6, ry: -12, rx: 10 }
     : { x: 150, y: 112, z: 30, rz: -24, ry: -14, rx: 8 }),
-  align: { x: 0, y: 0, z: 96, rz: 0, ry: -56, rx: 0 },
-  inserted: { x: 0, y: 0, z: -16, rz: 0, ry: -60, rx: 0 },
-  turned: { x: 0, y: 0, z: -16, rz: 0, ry: -60, rx: 90 },
+  align: { ...along(-70), rz: 0, ry: INSERT_ANGLE, rx: 0 },
 };
 
-const LAYERS = 10;       // thin copies stacked in depth to give the key thickness
-const BURY_DEPTH = 52;   // how much of the tip disappears into the lock, px
+const LAYERS = 10; // thin copies stacked in depth to give the key thickness
 
 // Vintage key, tip at x=0 pointing left, shaft centred on y=45
 const KEY_SHAPES = `
@@ -167,20 +174,26 @@ export function initIntro() {
     await moveTo(POSES.align, 560, ease.inOutCubic);
     if (!alive()) return;
 
+    // slide in along the shaft; whatever has passed the door surface is clipped away
     sfx.insert();
-    await Promise.all([
-      moveTo(POSES.inserted, 280, ease.inCubic),
-      tween(280, ease.inCubic, (t) => key.style.setProperty("--bury", `${(t * BURY_DEPTH).toFixed(1)}px`)),
-    ]);
+    await tween(420, ease.inOutCubic, (t) => {
+      const depth = lerp(-70, INSERT_DEPTH, t);
+      Object.assign(pose, along(depth));
+      key.style.setProperty("--bury", `${Math.max(0, depth).toFixed(1)}px`);
+      render();
+    });
     await wait(130);
     if (!alive()) return;
 
+    // key and cylinder turn together
     sfx.turn();
     intro.classList.add("is-turned");
-    await moveTo(POSES.turned, 430, ease.outBack);
+    await moveTo({ rx: 90 }, 430, ease.outBack);
     if (!alive()) return;
 
+    // the bolts across the seam slide back
     sfx.unlock();
+    intro.classList.add("is-unlocked");
     shake();
     ring();
     await wait(200);

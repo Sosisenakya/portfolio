@@ -452,13 +452,13 @@
   padding: 14px 20px 12px;
   border: 0;
   border-radius: 10px 10px 0 0;
-  background: #151515;
-  color: var(--smoke);
+  background: #1c1c1c;
+  color: var(--fog);
   font: 400 .84rem/1 var(--font-type);
   letter-spacing: .12em;
   text-transform: uppercase;
   transform: translateY(6px);
-  transition: transform .35s var(--ease-spring), color .2s;
+  transition: transform .35s var(--ease-spring), color .2s, background-color .2s;
 }
 
 .folder-tab small {
@@ -466,19 +466,24 @@
   opacity: .75;
 }
 
-.folder-tab:hover { color: var(--bone); transform: translateY(3px); }
+.folder-tab:hover { background-color: #262626; color: var(--white); transform: translateY(3px); }
 
+/* the open tab is a light paper tab that joins the paper edge along the top of the drawer */
 .folder-tab[aria-selected="true"] {
-  background: var(--soot);
-  box-shadow: inset 0 1px 0 #2e2e2e;
-  color: var(--white);
+  background: var(--paper) var(--grain-dark);
+  box-shadow: none;
+  color: var(--ink);
+  font-weight: 700;
   transform: none;
 }
+
+.folder-tab[aria-selected="true"] small { opacity: 1; }
 
 .folder-tab:focus-visible { outline-offset: -6px; }
 
 .drawer-panel {
   padding: clamp(18px, 4vw, 48px);
+  border-top: 4px solid var(--paper);
   background-color: var(--soot);
   background-image: var(--grain-light);
   box-shadow: inset 0 1px 0 #2a2a2a, 0 40px 60px -40px #000;
@@ -606,23 +611,6 @@
 }
 
 /* ---- Exhibits: the contact sheet ---- */
-
-.roll-label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 18px;
-  color: var(--fog);
-  font: 400 .8rem/1 var(--font-type);
-  letter-spacing: .18em;
-  text-transform: uppercase;
-}
-
-.roll-label span {
-  padding: 5px 8px 4px;
-  border: 1px solid var(--smoke);
-  font: 700 .78rem/1 var(--font-stencil);
-}
 
 .contact-sheet {
   display: grid;
@@ -829,11 +817,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.25) brightness(.8);
+  filter: brightness(.85);
   transition: filter .4s;
 }
 
-.video-facade:hover img { filter: grayscale(1) contrast(1.25) brightness(1); }
+.video-facade:hover img { filter: none; }
 .video-facade:focus-visible { outline-offset: -10px; }
 
 .osd {

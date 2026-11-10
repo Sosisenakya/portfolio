@@ -1,6 +1,6 @@
 // The flashlight that follows the cursor (or your finger), plus the pull cord that turns the room lights on
 // The beam itself is the .darkness overlay in css/effects.css, this file only moves --fx / --fy
-// Every visit starts in the dark: only the light cord and the flashlight are lit until one of them is used
+// The lights come on as the doors open. Pull the cord to go dark and hunt with the flashlight
 
 import { sfx } from "../core/audio.js";
 
@@ -79,7 +79,9 @@ export function initFlashlight() {
     cord.setAttribute("aria-label", on ? "Turn the room lights off" : "Turn the room lights on");
   };
 
+  // off while the intro's own beam is showing, on once the case is open
   setLights(false);
+  document.addEventListener("case:opened", () => setLights(true), { once: true });
 
   cord.addEventListener("click", () => {
     cord.classList.remove("is-pulled");

@@ -1,293 +1,507 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sosisenakya | Portfolio</title>
-  <meta name="description" content="Portfolio of Sosisenakya">
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <title>Sosisenakya | Case File</title>
+  <meta name="description" content="Portfolio of Sosisenakya, a Roblox developer for scripting and UI">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/mark.svg">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+
+  <script>
+    // Runs before the first paint: switches on the JS-only styles (intro doors, flashlight, reveals)
+    // If the scripts never start (page opened as a file, blocked, offline) the plain page comes back after 4s
+    document.documentElement.className = "js intro-open";
+    setTimeout(function () {
+      if (!window.__caseReady) document.documentElement.className = "no-js";
+    }, 4000);
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Reenie+Beanie&family=Special+Elite&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/intro.css">
+  <link rel="stylesheet" href="css/effects.css">
+
+  <script type="module" src="js/main.js" onerror="document.documentElement.className='no-js'"></script>
 </head>
 <body>
-  <canvas id="stars" aria-hidden="true"></canvas>
 
-  <nav class="nav">
-    <a class="brand" href="#top">
-      <img class="brand-mark" src="assets/logo.svg" alt="" width="34" height="34">
-      <span>Sosisenakya<span class="brand-dot">.</span></span>
-    </a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
-    <div class="nav-links" id="nav-links">
-      <a href="#about">About</a>
-      <a href="#work">Work</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
+  <!-- Icons used around the page, drawn once and reused with <use href="#..."> -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-mark" viewBox="0 0 64 64">
+      <path fill="currentColor" fill-rule="evenodd" transform="rotate(15 32 32)" d="M15 15h34v34H15z M35 19h10v10H35z"/>
+    </symbol>
+    <symbol id="i-keyhole" viewBox="0 0 24 40">
+      <path fill="currentColor" d="M12 2a8 8 0 0 0-4 14.9L5 38h14l-3-21.1A8 8 0 0 0 12 2z"/>
+    </symbol>
+    <symbol id="i-print" viewBox="0 0 48 60">
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M9 47C5 41 4 34 4.5 27 6 14 14 5 25 5c10 0 18 8 19 19"/>
+        <path d="M44 29c0 8-2 15-5 21"/>
+        <path d="M13 52c-3-6-5-13-4.5-21C9.5 19 16 12 24.5 12S39 19 39 28c0 7-1 14-4 20"/>
+        <path d="M17 55c-3-7-4-14-3.5-22 .5-9 4.5-14 10-14s9.5 5 9.5 12c0 8-1 15-4 21"/>
+        <path d="M21 57c-2-7-3-14-2.5-21 .3-5 2.5-8 5.5-8s5 3 5 7c0 8-1 14-3 20"/>
+        <path d="M24.5 34c.5 8 0 16-2 24"/>
+        <path d="M7 12c4-6 10-9.5 17.5-9.5 6 0 11 2 15 5.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-clip" viewBox="0 0 28 64">
+      <path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M9 14v34a8 8 0 0 0 16 0V10a7 7 0 0 0-14 0v36a3.5 3.5 0 0 0 7 0V16"/>
+    </symbol>
+  </svg>
+
+  <!-- =====================================================
+       INTRO: a locked case-file door. Drag the key in,
+       it turns, the two halves slide apart
+       (js/features/intro.js, css/intro.css)
+       ===================================================== -->
+  <div class="intro" data-intro role="dialog" aria-modal="true" aria-labelledby="intro-title">
+    <div class="seam-light" aria-hidden="true"></div>
+
+    <div class="door door--top">
+      <div class="door-plate">
+        <p class="door-kicker">Department of Roblox Development</p>
+        <p class="door-title" id="intro-title">Case file</p>
+        <p class="door-meta">No. 0417 &middot; Subject: Sosisenakya</p>
+      </div>
+      <div class="lock-face" aria-hidden="true">
+        <span class="lock-cylinder"><svg class="lock-hole" viewBox="0 0 24 40"><use href="#i-keyhole"/></svg></span>
+      </div>
     </div>
+
+    <div class="door door--bottom">
+      <div class="lock-face" aria-hidden="true">
+        <span class="lock-cylinder"><svg class="lock-hole" viewBox="0 0 24 40"><use href="#i-keyhole"/></svg></span>
+      </div>
+      <div class="door-plate door-plate--low">
+        <p class="intro-hint">
+          <span class="hand">drag the key into the lock</span>
+          <span class="intro-hint-sub">or click it &middot; or press Enter</span>
+        </p>
+        <p class="door-warning">Evidence room &middot; Authorized personnel only</p>
+      </div>
+    </div>
+
+    <button class="lock-button" type="button" data-lock aria-label="Turn the key and open the case file"></button>
+
+    <div class="key-stage" aria-hidden="true">
+      <div class="key-holder" data-key-holder>
+        <div class="key" data-key></div>
+      </div>
+    </div>
+
+    <button class="intro-skip" type="button" data-skip>Skip intro &rarr;</button>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Section index: folder tabs on the right edge, a menu on phones -->
+  <nav class="index" data-index aria-label="Sections">
+    <button class="index-toggle" type="button" aria-expanded="false" aria-controls="index-list">Index</button>
+    <ol class="index-list" id="index-list">
+      <li><a href="#top"><span>00</span> Cover</a></li>
+      <li><a href="#about"><span>01</span> Subject</a></li>
+      <li><a href="#work"><span>02</span> Evidence</a></li>
+      <li><a href="#services"><span>03</span> Methods</a></li>
+      <li><a href="#process"><span>04</span> Procedure</a></li>
+      <li><a href="#contact"><span>05</span> Tip line</a></li>
+    </ol>
   </nav>
 
+  <!-- =====================================================
+       COVER
+       ===================================================== -->
   <header class="hero" id="top">
-    <div class="orbit orbit-one" aria-hidden="true"></div>
-    <div class="orbit orbit-two" aria-hidden="true">
-      <span class="orbit-label">Luau</span>
+    <div class="hero-docket" data-enter style="--i:0">
+      <span>Dept. of Roblox Development</span>
+      <span>Case No. 0417</span>
+      <span>Status <b>Open</b></span>
+      <span>Filed <span data-year>2026</span></span>
     </div>
 
-    <div class="hero-inner">
-      <h1>Sosisenakya<br>Roblox Developer</h1>
-      <p class="lead">I have been developing on Roblox for 4 years, and have contributed to 80M+ Visits! I mainly do Scripting and UI</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact">Start a project</a>
-        <a class="btn btn-ghost" href="#work">See my work ↓</a>
+    <h1 class="hero-name" tabindex="-1" data-intro-exit>
+      <span class="hero-kicker" data-enter style="--i:1">Subject &mdash;</span>
+      <span class="hero-alias" data-enter style="--i:2">Sosisenakya</span>
+      <span class="hero-role" data-enter style="--i:3">Roblox Developer &middot; Scripting &amp; UI</span>
+    </h1>
+
+    <!-- EDIT: profile picture lives at assets/brand/profile.png -->
+    <figure class="photo hero-photo" data-enter style="--i:4">
+      <span class="tape" aria-hidden="true"></span>
+      <div class="hero-mug">
+        <img class="photo-img" src="assets/brand/profile.png" alt="Sosisenakya's profile picture" onerror="this.closest('figure').classList.add('is-missing')">
+        <svg class="hero-mug-fallback" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-mark"/></svg>
       </div>
-      <!-- EDIT: your availability -->
-      <p class="status"><span class="status-dot" aria-hidden="true"></span>Available for new projects</p>
+      <figcaption class="hand">the subject, 4 yrs on the job</figcaption>
+    </figure>
+
+    <p class="stamp hero-stamp" data-hero-stamp>Available for<br>new cases</p>
+
+    <div class="hero-brief" data-enter style="--i:5">
+      <!-- EDIT: your intro line -->
+      <p class="hero-lead" data-typewriter>I have been developing on Roblox for 4 years, and have contributed to 80M+ Visits! I mainly do Scripting and UI</p>
+      <div class="hero-actions">
+        <a class="tag-link" href="#contact">Open a case</a>
+        <a class="tag-link tag-link--dark" href="#work">Review the evidence</a>
+      </div>
     </div>
+
+    <p class="hero-cue hand" aria-hidden="true">move your light around, then scroll &darr;</p>
+
+    <!-- Hidden clues: data-clue is the note that shows when it's found. Add or remove freely -->
+    <button class="clue clue--hero" type="button" data-clue="4 years on the job"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
   </header>
 
-  <main>
-    <section class="section" id="about">
-      <div class="container">
-        <h2>About</h2>
-        <div class="about-grid">
-          <div class="prose">
-            <!-- EDIT: about you -->
+  <main id="main">
+
+    <!-- =====================================================
+         01 · THE SUBJECT (about)
+         ===================================================== -->
+    <section class="section dossier" id="about" aria-labelledby="about-title">
+      <header class="case-head" data-reveal>
+        <p class="case-no">No. 01</p>
+        <h2 class="case-title" id="about-title">The Subject</h2>
+        <p class="case-aside hand">who are we looking at?</p>
+      </header>
+
+      <div class="dossier-desk">
+        <article class="paper report" data-reveal>
+          <svg class="paperclip" viewBox="0 0 28 64" aria-hidden="true"><use href="#i-clip"/></svg>
+          <header class="report-head">
+            <span>Background report</span>
+            <span>Page 1 of 1</span>
+          </header>
+          <!-- EDIT: about you -->
+          <div class="report-body">
             <p>I'm a Roblox developer focused on scripting and UI. Over the past 4 years I've worked on games that have gathered 60M+ visits, building everything from gameplay systems to the interfaces players interact with every day</p>
             <p>I care about code that is organised, fast and easy for a team to extend later<br>I'm comfortable taking a feature from a rough idea to a finished, tested system</p>
           </div>
+          <footer class="report-sign">
+            <span>Signed</span>
+            <span class="hand report-signature">Sosisenakya</span>
+          </footer>
+          <button class="clue clue--paper clue--report" type="button" data-side="left" data-clue="80M+ visits and counting"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
+        </article>
+
+        <aside class="particulars" data-reveal aria-label="Particulars">
+          <p class="particulars-title">Particulars</p>
           <!-- EDIT: quick facts -->
-          <dl class="facts">
-            <div>
-              <dt>Timezone</dt>
-              <dd>GMT+7 (flexible)</dd>
-            </div>
-            <div>
-              <dt>Working hours</dt>
-              <dd>4 PM – 11 PM</dd>
-            </div>
-            <div>
-              <dt>Services</dt>
-              <dd>Scripting, UI</dd>
-            </div>
+          <dl>
+            <div><dt>Timezone</dt><dd>GMT+7 (flexible)</dd></div>
+            <div><dt>Working hours</dt><dd>4 PM – 11 PM</dd></div>
+            <div><dt>Services</dt><dd>Scripting, UI</dd></div>
+            <div><dt>Years active</dt><dd>4</dd></div>
+            <div><dt>Total visits</dt><dd><button class="redact" type="button" aria-pressed="false" title="Classified, click to reveal">80M+</button></dd></div>
           </dl>
-        </div>
+          <p class="particulars-note hand">psst, click the black bar</p>
+        </aside>
       </div>
     </section>
 
-    <section class="section" id="work">
-      <div class="container">
-        <h2>Work</h2>
-        <div class="tabs" role="tablist">
-          <button class="tab-btn active" type="button" role="tab" aria-selected="true" data-tab="projects">Projects</button>
-          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="showcases">Showcases</button>
-          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="open-source">Open-source projects</button>
-          <button class="tab-btn" type="button" role="tab" aria-selected="false" data-tab="video">Video</button>
+    <!-- =====================================================
+         02 · EVIDENCE (work)
+         ===================================================== -->
+    <section class="section evidence" id="work" aria-labelledby="work-title">
+      <header class="case-head" data-reveal>
+        <p class="case-no">No. 02</p>
+        <h2 class="case-title" id="work-title">Evidence</h2>
+        <p class="case-aside hand">everything they've touched</p>
+      </header>
+
+      <div class="drawer" data-reveal>
+        <div class="folder-tabs" role="tablist" aria-label="Evidence">
+          <button class="folder-tab" type="button" role="tab" id="tab-cases" aria-controls="panel-cases" aria-selected="true">Cases <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-exhibits" aria-controls="panel-exhibits" aria-selected="false" tabindex="-1">Exhibits <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-records" aria-controls="panel-records" aria-selected="false" tabindex="-1">Public records <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-tape" aria-controls="panel-tape" aria-selected="false" tabindex="-1">Surveillance tape <small data-count></small></button>
         </div>
 
-        <div class="grid grid-3 tab-panel active" data-panel="projects">
-          <article class="card project-card">
-            <div class="project-thumb">
-              <img src="assets/projects/wheelie-district.png" alt="First-person view of a blue dirt bike in Wheelie District" loading="lazy">
-            </div>
-            <div class="project-body">
-              <span class="project-tag">Scripting</span>
-              <h3>Wheelie District</h3>
-              <p>A vehicle game with 80M+ visits<br>I built a vehicle physics system with built-in wheelie mechanics, alongside core gameplay features</p>
-              <a class="btn btn-secondary" href="https://www.roblox.com/games/89490838554710/Wheelie-District" target="_blank" rel="noopener">Play on Roblox</a>
-            </div>
-          </article>
-          <article class="card project-card">
-            <div class="project-thumb">
-              <img src="assets/projects/brainrot-chest-rng.webp" alt="Poor versus rich characters opening chests in Brainrot Chest RNG" loading="lazy">
-            </div>
-            <div class="project-body">
-              <span class="project-tag">Scripting</span>
-              <h3>Brainrot Chest RNG</h3>
-              <p>A simple simulator game<br>I kept the code clean and easy to work with, made saving player data safe, and made sure it runs smoothly</p>
-              <a class="btn btn-secondary" href="https://www.roblox.com/games/80967681326780/Brainrot-Chest-RNG" target="_blank" rel="noopener">Play on Roblox</a>
-            </div>
-          </article>
-          <article class="card project-card">
-            <div class="project-thumb">
-              <img src="assets/projects/bubble-shooting-incremental.png" alt="Bubble Shooting Incremental title screen" loading="lazy" onerror="this.remove()">
-            </div>
-            <div class="project-body">
-              <span class="project-tag">UI &amp; Scripting</span>
-              <h3>Bubble Shooting Incremental</h3>
-              <p>A more open project where I did the UI and scripting and helped with game ideas<br>I built the whole Space Realm from scratch, starting from a rough idea</p>
-              <a class="btn btn-secondary" href="https://www.roblox.com/games/95015499414027/BubBle-ShoOting-incrEmentAl" target="_blank" rel="noopener">Play on Roblox</a>
-            </div>
-          </article>
-        </div>
+        <!-- Cases: projects pinned to a board, strings are drawn by js/features/evidence.js
+             EDIT: copy one <article class="exhibit"> per project, letters A, B, C... are automatic -->
+        <div class="drawer-panel" role="tabpanel" id="panel-cases" aria-labelledby="tab-cases">
+          <div class="board" data-board>
+            <svg class="board-strings" aria-hidden="true"></svg>
 
-        <!-- EDIT: copy one <article> per project inside the matching panel -->
-        <div class="tab-panel" data-panel="showcases" hidden>
-          <h3 class="showcase-title">UI</h3>
-          <div class="grid grid-3">
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/scripting-push-game.webp" alt="Push game with a push log, progress bar, event timer and upgrades" loading="lazy">
+            <article class="exhibit" data-item>
+              <figure class="photo exhibit-photo">
+                <span class="pin" data-pin aria-hidden="true"></span>
+                <img class="photo-img" src="assets/projects/wheelie-district.png" alt="First-person view of a blue dirt bike in Wheelie District" loading="lazy" data-zoom>
+                <span class="exhibit-no hand" aria-hidden="true"></span>
+              </figure>
+              <div class="paper exhibit-tag">
+                <p class="exhibit-kind">Scripting</p>
+                <h3>Wheelie District</h3>
+                <p>A vehicle game with 80M+ visits<br>I built a vehicle physics system with built-in wheelie mechanics, alongside core gameplay features</p>
+                <a class="case-link" href="https://www.roblox.com/games/89490838554710/Wheelie-District" target="_blank" rel="noopener">Visit the scene <span aria-hidden="true">&nearr;</span></a>
               </div>
-              <div class="project-body">
-                <h3>Push game</h3>
+            </article>
+
+            <article class="exhibit" data-item>
+              <figure class="photo exhibit-photo">
+                <span class="pin" data-pin aria-hidden="true"></span>
+                <img class="photo-img" src="assets/projects/brainrot-chest-rng.webp" alt="Poor versus rich characters opening chests in Brainrot Chest RNG" loading="lazy" data-zoom>
+                <span class="exhibit-no hand" aria-hidden="true"></span>
+              </figure>
+              <div class="paper exhibit-tag">
+                <p class="exhibit-kind">Scripting</p>
+                <h3>Brainrot Chest RNG</h3>
+                <p>A simple simulator game<br>I kept the code clean and easy to work with, made saving player data safe, and made sure it runs smoothly</p>
+                <a class="case-link" href="https://www.roblox.com/games/80967681326780/Brainrot-Chest-RNG" target="_blank" rel="noopener">Visit the scene <span aria-hidden="true">&nearr;</span></a>
+              </div>
+            </article>
+
+            <article class="exhibit" data-item>
+              <figure class="photo exhibit-photo">
+                <span class="pin" data-pin aria-hidden="true"></span>
+                <img class="photo-img" src="assets/projects/bubble-shooting-incremental.png" alt="Bubble Shooting Incremental title screen" loading="lazy" data-zoom>
+                <span class="exhibit-no hand" aria-hidden="true"></span>
+              </figure>
+              <div class="paper exhibit-tag">
+                <p class="exhibit-kind">UI &amp; Scripting</p>
+                <h3>Bubble Shooting Incremental</h3>
+                <p>A more open project where I did the UI and scripting and helped with game ideas<br>I built the whole Space Realm from scratch, starting from a rough idea</p>
+                <a class="case-link" href="https://www.roblox.com/games/95015499414027/BubBle-ShoOting-incrEmentAl" target="_blank" rel="noopener">Visit the scene <span aria-hidden="true">&nearr;</span></a>
+              </div>
+            </article>
+
+            <button class="clue clue--board" type="button" data-side="left" data-clue="idea to release, solo"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Exhibits: UI showcases on a photo contact sheet, frame numbers are automatic
+             EDIT: copy one <figure class="frame"> per showcase -->
+        <div class="drawer-panel" role="tabpanel" id="panel-exhibits" aria-labelledby="tab-exhibits" hidden>
+          <p class="roll-label"><span>Roll 01</span> UI work</p>
+          <div class="contact-sheet">
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/scripting-push-game.webp" alt="Push game with a push log, progress bar, event timer and upgrades" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Push game</h3>
                 <p>A game where players push each other for distance<br>I scripted the push log, the progress bar, events, upgrades and the auto click</p>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/ui-bike-shop.png" alt="Bike shop screen showing a green Kawasaki Ninja 650 with its stats and price" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h3>Bike shop</h3>
+              </figcaption>
+            </figure>
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-bike-shop.png" alt="Bike shop screen showing a green Kawasaki Ninja 650 with its stats and price" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Bike shop</h3>
                 <p>A shop screen for picking a bike, with its price, class and stat bars<br>Players flick through bikes with Q and E</p>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/ui-weapon-select.webp" alt="Weapon select screen showing an assault rifle with power and stat bars" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h3>Weapon select</h3>
+              </figcaption>
+            </figure>
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-weapon-select.webp" alt="Weapon select screen showing an assault rifle with power and stat bars" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Weapon select</h3>
                 <p>A loadout screen to browse guns by type, check their stats and see which ones you own</p>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/ui-quest-menu.webp" alt="Purple quest menu with main, daily and weekly tabs and a rewards list" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h3>Quest menu</h3>
+              </figcaption>
+            </figure>
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-quest-menu.webp" alt="Purple quest menu with main, daily and weekly tabs and a rewards list" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Quest menu</h3>
                 <p>A quest window with Main, Daily and Weekly tabs, progress bars and a list of rewards</p>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/ui-shop-inventory.webp" alt="Shop, index, inventory and settings windows in one colourful style" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h3>Shop, index and inventory</h3>
+              </figcaption>
+            </figure>
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-shop-inventory.webp" alt="Shop, index, inventory and settings windows in one colourful style" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Shop, index and inventory</h3>
                 <p>A set of matching windows: a shop, a collection index, an inventory and a settings menu</p>
-              </div>
-            </article>
-            <article class="card project-card">
-              <div class="project-thumb project-thumb-fit">
-                <img src="assets/showcases/ui-tower-loadout.webp" alt="Sci-fi tower loadout screen with a tower inventory and details panel" loading="lazy">
-              </div>
-              <div class="project-body">
-                <h3>Tower loadout</h3>
+              </figcaption>
+            </figure>
+            <figure class="frame" data-item>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-tower-loadout.webp" alt="Sci-fi tower loadout screen with a tower inventory and details panel" loading="lazy" data-zoom></div></div>
+              <figcaption>
+                <h3 class="hand">Tower loadout</h3>
                 <p>A sci-fi menu for choosing which towers to bring into a match, with categories, details and a team list</p>
-              </div>
-            </article>
+              </figcaption>
+            </figure>
           </div>
         </div>
 
-        <div class="tab-panel" data-panel="video" hidden>
-          <div class="video-frame">
-            <button class="video-facade" type="button" data-video-id="h00i7rxZFl8" aria-label="Play video">
-              <img src="https://i.ytimg.com/vi/h00i7rxZFl8/hqdefault.jpg" alt="Video thumbnail" loading="lazy">
-              <span class="video-play" aria-hidden="true"></span>
-            </button>
-          </div>
-        </div>
-
-        <div class="grid grid-3 tab-panel" data-panel="open-source" hidden>
-          <article class="card project-card">
-            <div class="project-body">
-              <h3>Luau utility modules</h3>
-              <p>A small collection of reusable Luau modules for signals, state handling and UI animation, free to use in your own games</p>
-              <a class="btn btn-secondary" href="https://github.com/Sosisenakya">View source</a>
-            </div>
+        <!-- Public records: open-source work -->
+        <div class="drawer-panel" role="tabpanel" id="panel-records" aria-labelledby="tab-records" hidden>
+          <article class="paper record" data-item>
+            <p class="record-kind">Public record &middot; Open source</p>
+            <h3>Luau utility modules</h3>
+            <p>A small collection of reusable Luau modules for signals, state handling and UI animation, free to use in your own games</p>
+            <a class="case-link" href="https://github.com/Sosisenakya" target="_blank" rel="noopener">View the source <span aria-hidden="true">&nearr;</span></a>
           </article>
         </div>
 
-        <div class="grid grid-3 tab-panel" data-panel="other" hidden>
-          <article class="card project-card">
-            <div class="project-body">
-              <h3>Code reviews and refactors</h3>
-              <p>Reviewing existing Roblox codebases, fixing performance problems and cleaning up legacy scripts for other teams</p>
-              <a class="btn btn-secondary" href="#contact">Get in touch</a>
+        <!-- Surveillance tape: the YouTube video only loads after a click -->
+        <div class="drawer-panel" role="tabpanel" id="panel-tape" aria-labelledby="tab-tape" hidden>
+          <div class="monitor" data-item>
+            <div class="monitor-screen">
+              <button class="video-facade" type="button" data-video-id="h00i7rxZFl8" aria-label="Play the video">
+                <img src="https://i.ytimg.com/vi/h00i7rxZFl8/hqdefault.jpg" alt="" loading="lazy">
+                <span class="osd osd--rec"><i></i>REC</span>
+                <span class="osd osd--cam">CAM 04</span>
+                <span class="osd osd--play">&#9654; PLAY</span>
+                <span class="osd osd--time" data-clock></span>
+              </button>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-muted" id="services">
-      <div class="container">
-        <div class="section-head">
-          <h2>Services</h2>
-        </div>
-        <div class="grid grid-2">
-          <div>
-            <p class="label">What I can build</p>
-            <ul class="check-list">
-              <li>Clean UI Effects</li>
-              <li>Modular systems using SSA, OOP, or ECS</li>
-              <li>Performance-critical systems</li>
-              <li>Combat systems (FPS, Battleground)</li>
-              <li>Anti-Cheat</li>
-            </ul>
-          </div>
-          <div>
-            <p class="label">What I do not take on</p>
-            <ul class="check-list check-list-no">
-              <li>Physics-Heavy System (Advanced Movement, Vehicle, etc)</li>
-            </ul>
+            <p class="monitor-label">Tape 01 &middot; click the screen to play</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="process">
-      <div class="container">
-        <h2>How a project goes</h2>
+    <!-- =====================================================
+         03 · MODUS OPERANDI (services)
+         ===================================================== -->
+    <section class="section methods" id="services" aria-labelledby="services-title">
+      <header class="case-head" data-reveal>
+        <p class="case-no">No. 03</p>
+        <h2 class="case-title" id="services-title">Modus operandi</h2>
+        <p class="case-aside hand">what they do, and what they won't</p>
+      </header>
+
+      <div class="mo-grid">
+        <div class="paper mo-sheet" data-reveal>
+          <p class="mo-label">Known methods</p>
+          <!-- EDIT: what you build -->
+          <ul class="mo-list" data-stagger>
+            <li>Clean UI Effects</li>
+            <li>Modular systems using SSA, OOP, or ECS</li>
+            <li>Performance-critical systems</li>
+            <li>Combat systems (FPS, Battleground)</li>
+            <li>Anti-Cheat</li>
+          </ul>
+        </div>
+
+        <div class="mo-declined" data-reveal>
+          <p class="mo-label">Will not take on</p>
+          <!-- EDIT: what you don't take -->
+          <ul class="mo-list mo-list--no" data-stagger>
+            <li>Physics-Heavy System (Advanced Movement, Vehicle, etc)</li>
+          </ul>
+          <p class="stamp mo-stamp">Declined</p>
+          <button class="clue clue--methods" type="button" data-clue="clean, modular code"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         04 · PROCEDURE (process)
+         ===================================================== -->
+    <section class="section procedure" id="process" aria-labelledby="process-title">
+      <header class="case-head" data-reveal>
+        <p class="case-no">No. 04</p>
+        <h2 class="case-title" id="process-title">Procedure</h2>
+        <p class="case-aside hand">how a case goes</p>
+      </header>
+
+      <div class="line" data-reveal>
+        <svg class="line-wire" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 8 Q500 66 1020 8"/></svg>
         <!-- EDIT: your steps -->
-        <ol class="steps">
-          <li>
-            <span class="card-number">1.</span>
-            <div>
-              <h3>Send an overview</h3>
-              <p>Tell me what you need, with references, a budget range and a deadline<br>I'll reply with questions and whether it's a good fit</p>
-            </div>
+        <ol class="slips">
+          <li class="slip">
+            <span class="slip-pin" aria-hidden="true"></span>
+            <span class="slip-no">01</span>
+            <h3>Send an overview</h3>
+            <p>Tell me what you need, with references, a budget range and a deadline<br>I'll reply with questions and whether it's a good fit</p>
           </li>
-          <li>
-            <span class="card-number">2.</span>
-            <div>
-              <h3>Agree on scope and price</h3>
-              <p>We settle the features, milestones, total cost and payment terms before any work begins</p>
-            </div>
+          <li class="slip">
+            <span class="slip-pin" aria-hidden="true"></span>
+            <span class="slip-no">02</span>
+            <h3>Agree on scope and price</h3>
+            <p>We settle the features, milestones, total cost and payment terms before any work begins</p>
           </li>
-          <li>
-            <span class="card-number">3.</span>
-            <div>
-              <h3>Build, review and deliver</h3>
-              <p>I share progress along the way, take your feedback, then hand over the finished project/code</p>
-            </div>
+          <li class="slip">
+            <span class="slip-pin" aria-hidden="true"></span>
+            <span class="slip-no">03</span>
+            <h3>Build, review and deliver</h3>
+            <p>I share progress along the way, take your feedback, then hand over the finished project/code</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <section class="section contact-section" id="contact">
-      <div class="container">
-        <h2>Contact me!</h2>
-        <!-- EDIT: how people should reach you -->
-        <p class="lead">Please don't just say 'hi'. Instead, share the required work (TO-DO list), 
-          references, screenshots, budget range, and target deadline</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://discord.com/users/951340452467052575" target="_blank" rel="noopener">Discord</a>
-          <a class="btn btn-secondary" href="https://www.roblox.com/users/1176816686/profile" target="_blank" rel="noopener">Roblox</a>
+    <!-- =====================================================
+         05 · TIP LINE (contact)
+         ===================================================== -->
+    <section class="section tipline" id="contact" aria-labelledby="contact-title">
+      <header class="case-head" data-reveal>
+        <p class="case-no">No. 05</p>
+        <h2 class="case-title" id="contact-title">Tip line</h2>
+        <p class="case-aside hand">got a case? report it here</p>
+      </header>
+
+      <div class="tip-grid">
+        <div class="tip-note-wrap" data-reveal>
+          <div class="paper tip-note">
+            <p class="tip-label">Before you call</p>
+            <!-- EDIT: how people should reach you -->
+            <p>Please don't just say 'hi'. Instead, share the required work (TO-DO list), references, screenshots, budget range, and target deadline</p>
+            <p class="hand tip-scrawl">a to-do list beats a "hi"</p>
+          </div>
+        </div>
+
+        <div class="card-wrap" data-reveal>
+          <div class="calling-card" data-tilt>
+            <p class="card-name">Sosisenakya</p>
+            <p class="card-role">Roblox Developer &middot; Scripting &amp; UI</p>
+            <ul class="card-lines">
+              <li><a href="https://discord.com/users/951340452467052575" target="_blank" rel="noopener"><span>Discord</span><span class="card-dots" aria-hidden="true"></span><span aria-hidden="true">&nearr;</span></a></li>
+              <li><a href="https://www.roblox.com/users/1176816686/profile" target="_blank" rel="noopener"><span>Roblox</span><span class="card-dots" aria-hidden="true"></span><span aria-hidden="true">&nearr;</span></a></li>
+            </ul>
+            <p class="card-foot"><span>GMT+7</span><span>4 PM – 11 PM</span></p>
+          </div>
+          <button class="clue clue--contact" type="button" data-side="left" data-clue="online 4 PM – 11 PM, GMT+7"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>&copy; <span id="year"></span> Sosisenakya</p>
+    <p class="stamp footer-stamp">Case still open</p>
+    <p>&copy; <span data-year>2026</span> Sosisenakya</p>
+    <a href="#top">Back to the cover &uarr;</a>
   </footer>
 
-  <script src="js/script.js?v=5"></script>
+  <!-- =====================================================
+       OVERLAYS: flashlight, film grain, HUD, case solved
+       ===================================================== -->
+  <div class="darkness" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="hud">
+    <button class="cord" type="button" data-lights aria-pressed="false" aria-label="Turn the room lights on">
+      <span class="cord-string"></span>
+      <span class="cord-pull"></span>
+      <span class="cord-label hand">lights</span>
+    </button>
+
+    <div class="notebook">
+      <div class="notebook-page" id="notebook-page" hidden>
+        <p class="notebook-title hand">Case notes</p>
+        <p class="notebook-empty" data-clue-empty>Nothing yet. Fingerprints are hidden around the page, sweep your light to find them</p>
+        <ol class="notebook-list" data-clue-list></ol>
+      </div>
+      <div class="notebook-row">
+        <button class="hud-button" type="button" data-notebook aria-expanded="false" aria-controls="notebook-page">
+          <svg viewBox="0 0 48 60" aria-hidden="true"><use href="#i-print"/></svg>
+          Clues <b data-clue-count>0</b>/<span data-clue-total>0</span>
+        </button>
+        <button class="hud-button" type="button" data-sound aria-pressed="true">Sound on</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="solved" data-solved role="dialog" aria-modal="true" aria-labelledby="solved-title" hidden>
+    <p class="stamp solved-stamp" id="solved-title">Case solved</p>
+    <p class="solved-text hand">Every clue found. You know who to call</p>
+    <div class="solved-actions">
+      <a class="tag-link" href="#contact" data-solved-close>Open a case</a>
+      <button class="solved-close" type="button" data-solved-close>Keep looking around</button>
+    </div>
+  </div>
+
 </body>
 </html>

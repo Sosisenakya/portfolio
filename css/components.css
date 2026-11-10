@@ -1,0 +1,367 @@
+/* =========================================================
+   components.css
+   Reusable pieces: section frame and heads, paper, photos,
+   stamps, evidence-tag buttons, tape, redactions, clues,
+   lightbox
+   ========================================================= */
+
+/* ---------- Section frame ---------- */
+
+.section {
+  position: relative;
+  padding: var(--section-gap) calc(var(--gutter) + var(--rail)) 0 var(--gutter);
+}
+
+.section > * {
+  max-width: var(--content);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.case-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 26px;
+  margin-bottom: clamp(44px, 6vw, 84px);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--iron);
+}
+
+.case-no {
+  padding: .55em .7em .45em;
+  border: 1px solid var(--smoke);
+  color: var(--fog);
+  font: 700 .8rem/1 var(--font-stencil);
+  letter-spacing: .22em;
+  transform: translateY(-.7em);
+}
+
+.case-title {
+  color: var(--white);
+  font: italic 800 clamp(2.9rem, 7.6vw, 6.4rem)/.92 var(--font-display);
+  letter-spacing: -.02em;
+}
+
+.case-aside {
+  margin-left: auto;
+  color: var(--fog);
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height: 1;
+  transform: rotate(-3deg);
+}
+
+/* ---------- Paper ---------- */
+
+.paper {
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    var(--grain-dark),
+    linear-gradient(165deg, rgb(255 255 255 / .5), rgb(0 0 0 / .07));
+  color: #1b1b1b;
+  box-shadow:
+    0 30px 50px -24px rgb(0 0 0 / .9),
+    0 3px 8px rgb(0 0 0 / .45);
+}
+
+/* ---------- Photos (polaroid style) ---------- */
+
+.photo {
+  position: relative;
+  padding: 10px 10px 0;
+  background: var(--white);
+  box-shadow:
+    0 26px 40px -20px rgb(0 0 0 / .95),
+    0 2px 5px rgb(0 0 0 / .5);
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.photo-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--ink);
+  filter: grayscale(1) contrast(1.1) brightness(.95);
+  transition: filter .6s var(--ease-out);
+}
+
+/* Colour comes back when you look closer */
+.photo:hover .photo-img,
+.photo:focus-within .photo-img { filter: none; }
+
+.photo figcaption,
+.photo .exhibit-no {
+  display: block;
+  padding: 8px 4px 12px;
+  color: #222;
+  font-family: var(--font-hand);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+img[data-zoom] { cursor: zoom-in; }
+img[data-zoom]:focus-visible { outline: 2px dashed var(--ink); outline-offset: -6px; }
+
+.tape {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  z-index: 2;
+  width: 112px;
+  height: 30px;
+  margin-left: -56px;
+  background: rgb(214 214 208 / .62);
+  box-shadow: 0 1px 2px rgb(0 0 0 / .25);
+  transform: rotate(-4deg);
+  clip-path: polygon(3% 0, 97% 0, 100% 20%, 96% 40%, 100% 60%, 96% 80%, 98% 100%, 2% 100%, 0 80%, 4% 60%, 0 40%, 4% 20%);
+}
+
+/* ---------- Rubber stamps ---------- */
+
+.stamp {
+  --stamp-ink: var(--white);
+  display: inline-block;
+  padding: .5em .85em .42em;
+  border: 5px double var(--stamp-ink);
+  border-radius: 4px;
+  color: var(--stamp-ink);
+  font: 700 1.05rem/1.05 var(--font-stencil);
+  letter-spacing: .16em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: .92;
+  transform: rotate(var(--tilt, -9deg));
+  -webkit-mask-image: var(--grain-mask);
+  mask-image: var(--grain-mask);
+  -webkit-mask-size: 160px;
+  mask-size: 160px;
+}
+
+.stamp--dark { --stamp-ink: var(--ink); }
+
+/* ---------- Evidence-tag buttons ---------- */
+
+.tag-link {
+  --tag: var(--paper);
+  --tag-ink: var(--ink);
+  --hole: var(--night);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .7em;
+  min-height: 50px;
+  padding: .8em 1.5em .75em 2.7em;
+  background-color: var(--tag);
+  background-image: var(--grain-dark);
+  color: var(--tag-ink);
+  font: 400 .95rem/1 var(--font-type);
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  clip-path: polygon(16px 0, 100% 0, 100% 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
+  transform: rotate(var(--tilt, -1.5deg));
+  transition: transform .4s var(--ease-spring);
+}
+
+/* punched hole */
+.tag-link::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 11px;
+  height: 11px;
+  margin-top: -5.5px;
+  border-radius: 50%;
+  background: var(--hole);
+  box-shadow: 0 0 0 3px rgb(0 0 0 / .16);
+}
+
+.tag-link::after {
+  content: "\2192";
+  font-family: var(--font-mono);
+  transition: transform .3s var(--ease-out);
+}
+
+.tag-link:hover { transform: rotate(0deg) translateY(-3px); }
+.tag-link:hover::after { transform: translateX(5px); }
+
+/* clip-path would cut off a normal outline, so focus inverts the tag instead */
+.tag-link:focus-visible {
+  outline: none;
+  --tag: var(--white);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.tag-link--dark {
+  --tag: var(--ash);
+  --tag-ink: var(--white);
+  --tilt: 1.5deg;
+  background-image: var(--grain-light);
+}
+
+.tag-link--dark:focus-visible { --tag: var(--iron); }
+
+/* ---------- Plain typed link with an underline ---------- */
+
+.case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .45em;
+  padding-bottom: 4px;
+  border-bottom: 2px solid currentColor;
+  font: 400 .88rem/1 var(--font-type);
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: letter-spacing .3s var(--ease-out);
+}
+
+.case-link:hover { letter-spacing: .13em; }
+
+/* ---------- Redacted text ---------- */
+
+.redact {
+  position: relative;
+  padding: 0 .2em;
+  margin: 0 -.2em;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+.redact::after {
+  content: "";
+  position: absolute;
+  inset: .08em -.05em;
+  background: var(--ink);
+  transform-origin: 100% 50%;
+  transition: transform .5s var(--ease-in-out);
+}
+
+.redact:hover::after { transform: scaleX(.9); }
+.redact[aria-pressed="true"]::after { transform: scaleX(0); }
+
+/* ---------- Hidden clues (fingerprints) ---------- */
+
+.clue {
+  --clue-ink: var(--fog);
+  --found-ink: var(--white);
+  position: absolute;
+  z-index: 3;
+  width: 46px;
+  height: 56px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: var(--clue-ink);
+  opacity: .2;
+  cursor: zoom-in;
+  transform: rotate(var(--r, -14deg));
+  transition: opacity .3s, transform .4s var(--ease-spring);
+}
+
+.clue svg { width: 100%; height: 100%; }
+
+.clue:hover,
+.clue:focus-visible {
+  opacity: .95;
+  transform: rotate(var(--r, -14deg)) scale(1.15);
+}
+
+.clue--paper {
+  --clue-ink: #3c3c3c;
+  --found-ink: #111;
+}
+
+.clue.is-found {
+  opacity: 1;
+  color: var(--found-ink);
+  cursor: default;
+}
+
+/* chalk circle around a found print */
+.clue.is-found::before {
+  content: "";
+  position: absolute;
+  inset: -9px -12px;
+  border: 2px solid var(--found-ink);
+  border-radius: 50%;
+  transform: rotate(-8deg);
+  animation: clue-circle .5s var(--ease-out) both;
+}
+
+.clue-note {
+  position: absolute;
+  top: 6px;
+  left: calc(100% + 14px);
+  width: max-content;
+  max-width: 200px;
+  color: var(--found-ink);
+  font: 400 1.55rem/1 var(--font-hand);
+  text-align: left;
+  pointer-events: none;
+  transform: rotate(calc(var(--r, -14deg) * -1 - 3deg));
+  transform-origin: 0 50%;
+  animation: clue-note .5s .12s var(--ease-out) both;
+}
+
+.clue[data-side="left"] .clue-note {
+  left: auto;
+  right: calc(100% + 14px);
+  text-align: right;
+  transform-origin: 100% 50%;
+}
+
+/* ---------- Lightbox ---------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: grid;
+  place-items: center;
+  padding: 5vmin;
+  background: rgb(6 6 6 / .94);
+  cursor: zoom-out;
+  animation: fade-in .25s ease-out;
+}
+
+.lightbox figure {
+  max-width: min(1200px, 100%);
+  animation: develop .7s var(--ease-out);
+}
+
+.lightbox img {
+  width: auto;
+  max-height: 76vh;
+  margin: 0 auto;
+  border: 12px solid var(--white);
+  box-shadow: 0 40px 80px -30px #000;
+}
+
+.lightbox figcaption {
+  margin-top: 16px;
+  color: var(--white);
+  font: 400 2rem/1 var(--font-hand);
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  padding: 10px 14px;
+  border: 1px solid var(--iron);
+  background: none;
+  color: var(--fog);
+  font: 400 .8rem/1 var(--font-type);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.lightbox-close:hover { color: var(--white); border-color: var(--fog); }

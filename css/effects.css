@@ -1,0 +1,372 @@
+/* =========================================================
+   effects.css
+   The flashlight, film grain, the HUD (light cord, clue
+   notebook, sound), the "case solved" screen, scroll
+   reveals and every @keyframes on the site
+   ========================================================= */
+
+/* ---------- Flashlight ---------- */
+
+.darkness {
+  --beam: clamp(240px, 27vw, 420px);
+  --dark: .86;
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  pointer-events: none;
+  background:
+    radial-gradient(circle calc(var(--beam) * .55) at var(--fx) var(--fy), rgb(255 255 255 / .045), transparent),
+    radial-gradient(circle var(--beam) at var(--fx) var(--fy),
+      rgb(6 6 6 / 0) 0%,
+      rgb(6 6 6 / 0) 30%,
+      rgb(6 6 6 / calc(var(--dark) * .55)) 62%,
+      rgb(6 6 6 / var(--dark)) 100%);
+  transition: opacity .8s ease;
+}
+
+html.intro-open .darkness { --dark: .62; }
+html.lights-on .darkness { opacity: 0; }
+
+/* Phones: a wider, softer beam that follows your finger */
+@media (hover: none), (pointer: coarse) {
+  .darkness {
+    --beam: 85vmax;
+    --dark: .72;
+  }
+}
+
+/* ---------- Film grain ---------- */
+
+.grain {
+  position: fixed;
+  inset: -120px;
+  z-index: 111;
+  background-image: var(--grain-light);
+  opacity: .06;
+  pointer-events: none;
+  animation: grain 1s steps(5) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+}
+
+html:not(.js) .darkness,
+html:not(.js) .grain,
+html:not(.js) .hud,
+html:not(.js) .clue { display: none; }
+
+/* ---------- HUD ---------- */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  pointer-events: none;
+  transition: opacity .6s .3s, visibility 0s .3s;
+}
+
+.hud > * { pointer-events: auto; }
+
+html.intro-open .hud,
+html.intro-open .index {
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+}
+
+.index { transition: opacity .6s .5s, visibility 0s .5s; }
+
+/* pull-cord light switch */
+.cord {
+  position: absolute;
+  top: 0;
+  right: calc(var(--rail) + clamp(28px, 7vw, 110px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48px;
+  padding: 0 0 6px;
+  border: 0;
+  background: none;
+  transform-origin: 50% 0;
+}
+
+.cord-string {
+  width: 2px;
+  height: 92px;
+  background: linear-gradient(var(--iron), var(--fog));
+}
+
+.cord-pull {
+  width: 14px;
+  height: 26px;
+  border-radius: 7px 7px 9px 9px;
+  background: radial-gradient(circle at 35% 30%, #fff, #9c9c9c 45%, #3d3d3d);
+  box-shadow: 0 4px 8px rgb(0 0 0 / .6);
+}
+
+.cord-label {
+  margin-top: 4px;
+  color: var(--fog);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.cord:hover { animation: cord-sway 1.6s ease-in-out; }
+.cord.is-pulled { animation: cord-pull .5s var(--ease-spring); }
+.cord:focus-visible { outline-offset: 0; }
+
+@media (max-width: 899px) {
+  .cord { right: 112px; }
+  .cord-string { height: 16px; }
+}
+
+/* clue notebook + sound */
+.notebook {
+  position: absolute;
+  left: clamp(12px, 2.4vw, 28px);
+  bottom: clamp(12px, 2.4vw, 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.notebook-row {
+  display: flex;
+  gap: 8px;
+}
+
+.hud-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--iron);
+  background: rgb(14 14 14 / .92);
+  color: var(--bone);
+  font: 400 .76rem/1 var(--font-type);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: border-color .2s, color .2s;
+}
+
+.hud-button:hover { border-color: var(--fog); color: var(--white); }
+.hud-button svg { width: 15px; height: 19px; }
+.hud-button b { color: var(--white); font-weight: 400; }
+.hud-button.is-bumped { animation: bump .55s var(--ease-spring); }
+
+.notebook-page {
+  width: min(300px, calc(100vw - 24px));
+  padding: 20px 22px 22px;
+  background-color: var(--paper);
+  background-image:
+    var(--grain-dark),
+    repeating-linear-gradient(transparent 0 27px, #c6c6c2 27px 28px);
+  box-shadow: 0 24px 40px -16px #000;
+  color: #1b1b1b;
+  transform: rotate(-1deg);
+  transform-origin: 0 100%;
+  animation: note-up .35s var(--ease-spring);
+}
+
+.notebook-title {
+  margin-bottom: 6px;
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.notebook-empty {
+  color: #444;
+  font-size: .86rem;
+  line-height: 1.55;
+}
+
+.notebook-list {
+  list-style: decimal;
+  padding-left: 1.3em;
+}
+
+.notebook-list li {
+  font: 400 1.4rem/28px var(--font-hand);
+}
+
+/* ---------- Case solved ---------- */
+
+.solved {
+  position: fixed;
+  inset: 0;
+  z-index: 125;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 26px;
+  padding: 24px;
+  background: rgb(8 8 8 / .86);
+  text-align: center;
+  animation: fade-in .3s ease-out;
+}
+
+.solved[hidden] { display: none; }
+
+.solved-stamp {
+  --tilt: -8deg;
+  border-width: 9px;
+  font-size: clamp(2.2rem, 8vw, 4.6rem);
+  animation: stamp-in .55s var(--ease-out) both;
+}
+
+.solved-text {
+  color: var(--white);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.solved-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px 24px;
+}
+
+.solved-close {
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  color: var(--fog);
+  font: 400 .84rem/1 var(--font-type);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.solved-close:hover { color: var(--white); }
+
+/* ---------- Entrances and scroll reveals (JS only) ---------- */
+
+/* cover: slides in once the doors open */
+.js [data-enter] {
+  opacity: 0;
+  translate: 0 28px;
+}
+
+.js.is-revealed [data-enter] {
+  opacity: 1;
+  translate: none;
+  transition: opacity .9s var(--ease-out), translate 1s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 110ms + 250ms);
+}
+
+.js .hero-stamp { opacity: 0; }
+.js.is-revealed .hero-stamp { animation: stamp-in .5s 1.5s var(--ease-out) both; }
+
+/* sections: rise in as they scroll into view */
+.js [data-reveal] {
+  opacity: 0;
+  translate: 0 40px;
+  transition: opacity .9s var(--ease-out), translate 1s var(--ease-out);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  translate: none;
+}
+
+/* ticks draw themselves in, one after another */
+.js .mo-sheet .mo-list li::before {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .45s var(--ease-out);
+  transition-delay: calc(var(--n, 0) * 140ms + 350ms);
+}
+
+.js .mo-sheet.is-in .mo-list li::before { clip-path: inset(0); }
+
+.js .mo-list--no li::after {
+  transform: scaleX(0);
+  transition: transform .6s .5s var(--ease-out);
+}
+
+.js .mo-declined.is-in .mo-list--no li::after { transform: none; }
+
+.js .mo-stamp { opacity: 0; }
+.js .mo-declined.is-in .mo-stamp { animation: stamp-in .5s 1s var(--ease-out) both; }
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes flash {
+  0% { opacity: 0; }
+  12% { opacity: .2; }
+  100% { opacity: 0; }
+}
+
+@keyframes key-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-40px, 25px); }
+  40% { transform: translate(30px, -45px); }
+  60% { transform: translate(-55px, -15px); }
+  80% { transform: translate(45px, 35px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(var(--tilt, -9deg)) scale(2.6); }
+  55% { opacity: .95; transform: rotate(var(--tilt, -9deg)) scale(.93); }
+  100% { opacity: .92; transform: rotate(var(--tilt, -9deg)) scale(1); }
+}
+
+@keyframes develop {
+  from { opacity: 0; filter: grayscale(1) brightness(1.9) blur(5px); transform: scale(.97); }
+  to { opacity: 1; filter: none; transform: none; }
+}
+
+@keyframes swing {
+  0% { transform: rotate(var(--tilt, 0deg)); }
+  18% { transform: rotate(calc(var(--tilt, 0deg) + 5deg)); }
+  42% { transform: rotate(calc(var(--tilt, 0deg) - 3.5deg)); }
+  66% { transform: rotate(calc(var(--tilt, 0deg) + 1.8deg)); }
+  100% { transform: rotate(var(--tilt, 0deg)); }
+}
+
+@keyframes cord-pull {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes cord-sway {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(5deg); }
+  60% { transform: rotate(-3deg); }
+}
+
+@keyframes bump {
+  40% { transform: scale(1.14) rotate(-2deg); }
+}
+
+@keyframes note-up {
+  from { opacity: 0; transform: rotate(-4deg) translateY(12px) scale(.96); }
+}
+
+@keyframes clue-circle {
+  from { opacity: 0; transform: rotate(-30deg) scale(1.5); }
+}
+
+@keyframes clue-note {
+  from { opacity: 0; translate: -6px 4px; }
+}

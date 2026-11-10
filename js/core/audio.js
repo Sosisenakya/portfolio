@@ -119,9 +119,6 @@ export const sfx = {
     sweep({ from: 160, to: 900, peak: 0.22, duration: 1.3 });
     tone({ freq: 58, to: 34, peak: 0.45, decay: 1.1 });
   },
-  type() {
-    burst({ freq: 2600 + Math.random() * 900, q: 4, peak: 0.07, decay: 0.022 });
-  },
   stamp() {
     tone({ freq: 140, to: 55, peak: 0.7, decay: 0.2 });
     burst({ freq: 500, q: 1, peak: 0.35, decay: 0.08, type: "lowpass" });

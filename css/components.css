@@ -82,13 +82,7 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: var(--ink);
-  filter: grayscale(1) contrast(1.1) brightness(.95);
-  transition: filter .6s var(--ease-out);
 }
-
-/* Colour comes back when you look closer */
-.photo:hover .photo-img,
-.photo:focus-within .photo-img { filter: none; }
 
 .photo figcaption,
 .photo .exhibit-no {

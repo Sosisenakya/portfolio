@@ -139,7 +139,7 @@
 
     <div class="hero-brief" data-enter style="--i:5">
       <!-- EDIT: your intro line -->
-      <p class="hero-lead" data-typewriter>I have been developing on Roblox for 4 years, and have contributed to 80M+ Visits! I mainly do Scripting and UI</p>
+      <p class="hero-lead">I have been developing on Roblox for 4 years, and have contributed to 80M+ Visits! I mainly do Scripting and UI</p>
       <div class="hero-actions">
         <a class="tag-link" href="#contact">Open a case</a>
         <a class="tag-link tag-link--dark" href="#work">Review the evidence</a>
@@ -212,8 +212,8 @@
         <div class="folder-tabs" role="tablist" aria-label="Evidence">
           <button class="folder-tab" type="button" role="tab" id="tab-cases" aria-controls="panel-cases" aria-selected="true">Projects <small data-count></small></button>
           <button class="folder-tab" type="button" role="tab" id="tab-exhibits" aria-controls="panel-exhibits" aria-selected="false" tabindex="-1">UI record <small data-count></small></button>
-          <button class="folder-tab" type="button" role="tab" id="tab-records" aria-controls="panel-records" aria-selected="false" tabindex="-1">Public records <small data-count></small></button>
-          <button class="folder-tab" type="button" role="tab" id="tab-tape" aria-controls="panel-tape" aria-selected="false" tabindex="-1">Surveillance tape <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-opensource" aria-controls="panel-opensource" aria-selected="false" tabindex="-1">Open source <small data-count></small></button>
+          <button class="folder-tab" type="button" role="tab" id="tab-videos" aria-controls="panel-videos" aria-selected="false" tabindex="-1">Videos <small data-count></small></button>
         </div>
 
         <!-- Projects: pinned to a board, strings are drawn by js/features/evidence.js
@@ -264,6 +264,21 @@
               </div>
             </article>
 
+            <article class="exhibit" data-item>
+              <figure class="photo exhibit-photo">
+                <span class="pin" data-pin aria-hidden="true"></span>
+                <img class="photo-img" src="assets/projects/bridge-to-infinity.webp" alt="A bridge of floating platforms over a lava sea, leading up to a castle in the clouds" loading="lazy" data-zoom>
+                <span class="exhibit-no hand" aria-hidden="true"></span>
+                <p class="stamp exhibit-stamp" aria-hidden="true">To be<br>released</p>
+              </figure>
+              <div class="paper exhibit-tag">
+                <p class="exhibit-kind">Upcoming</p>
+                <h3>Bridge to Infinity</h3>
+                <p>A game that is still in the works<br>More on this case once it's released</p>
+                <p class="case-sealed">Scene sealed until release</p>
+              </div>
+            </article>
+
             <button class="clue clue--board" type="button" data-side="left" data-clue="idea to release, solo"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
           </div>
         </div>
@@ -274,7 +289,7 @@
           <p class="roll-label"><span>Roll 01</span> Interfaces I designed and built in Roblox, from layout to the tweens and the code behind them</p>
           <div class="contact-sheet">
             <figure class="frame" data-item>
-              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/scripting-push-game.webp" alt="Push game HUD with a push log, progress bar, event timer and upgrade buttons" loading="lazy" data-zoom></div></div>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/scripting-push-game.jpg" alt="Push game HUD with a push log, progress bar, event timer and upgrade buttons" loading="lazy" data-zoom></div></div>
               <figcaption>
                 <h3 class="hand">Push game HUD</h3>
                 <p>The in-game HUD for a pushing game: a live push log, a distance progress bar, an event timer and the upgrade and auto-click buttons, all wired up to the game</p>
@@ -295,14 +310,14 @@
               </figcaption>
             </figure>
             <figure class="frame" data-item>
-              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-quest-menu.webp" alt="Purple quest menu with main, daily and weekly tabs and a rewards list" loading="lazy" data-zoom></div></div>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-quest-menu.jpg" alt="Purple quest menu with main, daily and weekly tabs and a rewards list" loading="lazy" data-zoom></div></div>
               <figcaption>
                 <h3 class="hand">Quest menu</h3>
                 <p>A quest window with Main, Daily and Weekly tabs, progress bars and a list of rewards</p>
               </figcaption>
             </figure>
             <figure class="frame" data-item>
-              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-shop-inventory.webp" alt="Shop, index, inventory and settings windows in one colourful style" loading="lazy" data-zoom></div></div>
+              <div class="frame-film"><div class="frame-img"><img src="assets/showcases/ui-shop-inventory.jpg" alt="Shop, index, inventory and settings windows in one colourful style" loading="lazy" data-zoom></div></div>
               <figcaption>
                 <h3 class="hand">Shop, index and inventory</h3>
                 <p>A set of matching windows: a shop, a collection index, an inventory and a settings menu</p>
@@ -318,8 +333,8 @@
           </div>
         </div>
 
-        <!-- Public records: open-source work -->
-        <div class="drawer-panel" role="tabpanel" id="panel-records" aria-labelledby="tab-records" hidden>
+        <!-- Open source -->
+        <div class="drawer-panel" role="tabpanel" id="panel-opensource" aria-labelledby="tab-opensource" hidden>
           <!-- EDIT: open-source projects, copy one <article class="record"> per project -->
           <article class="record" data-item>
             <figure class="photo record-shot">
@@ -327,7 +342,7 @@
               <figcaption class="hand">fully typed API</figcaption>
             </figure>
             <div class="paper record-sheet">
-              <p class="record-kind">Public record &middot; Open source &middot; Luau</p>
+              <p class="record-kind">Open source &middot; Luau</p>
               <h3>Whisper</h3>
               <p>A wrapper around Roblox's MessagingService for talking between servers. It takes care of the rate limits and edge cases so you just queue a message and listen for it, fully type-checked</p>
               <ul class="record-points">
@@ -346,19 +361,49 @@
           </article>
         </div>
 
-        <!-- Surveillance tape: the YouTube video only loads after a click -->
-        <div class="drawer-panel" role="tabpanel" id="panel-tape" aria-labelledby="tab-tape" hidden>
-          <div class="monitor" data-item>
-            <div class="monitor-screen">
-              <button class="video-facade" type="button" data-video-id="h00i7rxZFl8" aria-label="Play the video">
-                <img src="https://i.ytimg.com/vi/h00i7rxZFl8/hqdefault.jpg" alt="" loading="lazy">
-                <span class="osd osd--rec"><i></i>REC</span>
-                <span class="osd osd--cam">CAM 04</span>
-                <span class="osd osd--play">&#9654; PLAY</span>
-                <span class="osd osd--time" data-clock></span>
-              </button>
-            </div>
-            <p class="monitor-label">Tape 01 &middot; click the screen to play</p>
+        <!-- Videos: each YouTube video only loads once its screen is clicked
+             EDIT: copy one <figure class="monitor"> per video. data-video-id is the part after youtu.be/
+             and the thumbnail URL uses the same id. Tape and CAM numbers are automatic -->
+        <div class="drawer-panel" role="tabpanel" id="panel-videos" aria-labelledby="tab-videos" hidden>
+          <div class="monitor-wall">
+            <figure class="monitor" data-item>
+              <div class="monitor-screen">
+                <button class="video-facade" type="button" data-video-id="h00i7rxZFl8">
+                  <img src="https://i.ytimg.com/vi/h00i7rxZFl8/hqdefault.jpg" alt="" loading="lazy">
+                  <span class="osd osd--rec"><i></i>REC</span>
+                  <span class="osd osd--cam"></span>
+                  <span class="osd osd--play">&#9654; PLAY</span>
+                  <span class="osd osd--time" data-clock></span>
+                </button>
+              </div>
+              <figcaption class="monitor-label">My first animated Roblox GUI, timelapse</figcaption>
+            </figure>
+
+            <figure class="monitor" data-item>
+              <div class="monitor-screen">
+                <button class="video-facade" type="button" data-video-id="x6It0RVq564">
+                  <img src="https://i.ytimg.com/vi/x6It0RVq564/hqdefault.jpg" alt="" loading="lazy">
+                  <span class="osd osd--rec"><i></i>REC</span>
+                  <span class="osd osd--cam"></span>
+                  <span class="osd osd--play">&#9654; PLAY</span>
+                  <span class="osd osd--time" data-clock></span>
+                </button>
+              </div>
+              <figcaption class="monitor-label">Fully functional Rubik's Cube + solver</figcaption>
+            </figure>
+
+            <figure class="monitor" data-item>
+              <div class="monitor-screen">
+                <button class="video-facade" type="button" data-video-id="YiHfI5j3O0s">
+                  <img src="https://i.ytimg.com/vi/YiHfI5j3O0s/hqdefault.jpg" alt="" loading="lazy">
+                  <span class="osd osd--rec"><i></i>REC</span>
+                  <span class="osd osd--cam"></span>
+                  <span class="osd osd--play">&#9654; PLAY</span>
+                  <span class="osd osd--time" data-clock></span>
+                </button>
+              </div>
+              <figcaption class="monitor-label">Gradient descent test, neural networking</figcaption>
+            </figure>
           </div>
         </div>
       </div>

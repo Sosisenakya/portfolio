@@ -119,17 +119,19 @@
 
 /* =============== Cover =============== */
 
+/* the cover's content is centred in the first screen, the scroll hint sits at the bottom edge */
 .hero {
   position: relative;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: auto auto;
+  align-content: center;
   column-gap: clamp(12px, 2vw, 24px);
   min-height: 100vh;
   min-height: 100svh;
   max-width: calc(1440px + var(--rail));
   margin: 0 auto;
-  padding: clamp(18px, 3vw, 30px) calc(var(--gutter) + var(--rail)) clamp(24px, 4vw, 40px) var(--gutter);
+  padding: clamp(40px, 6vh, 64px) calc(var(--gutter) + var(--rail)) clamp(72px, 11vh, 110px) var(--gutter);
 }
 
 .hero-name {
@@ -138,7 +140,6 @@
   align-self: end;
   display: flex;
   flex-direction: column;
-  padding-top: 48px;
   font-weight: 400;
   outline: none;
 }
@@ -177,14 +178,14 @@
   background: currentColor;
 }
 
+/* spans the name and the intro text and sits centred against both, which keeps it clear of the light cord */
 .hero-photo {
   --tilt: 4deg;
   grid-column: 10 / -1;
-  grid-row: 1;
+  grid-row: 1 / span 2;
   align-self: center;
   justify-self: end;
   width: min(100%, 290px);
-  margin-top: 64px;
 }
 
 .hero-mug {
@@ -196,12 +197,18 @@
   background: radial-gradient(circle at 50% 38%, #3d3d3d 0, #121212 70%);
 }
 
+/* the mugshot stays black and white until you look closer */
 .hero-mug .photo-img {
   position: absolute;
   inset: 0;
   height: 100%;
   aspect-ratio: auto;
+  filter: grayscale(1) contrast(1.1) brightness(.95);
+  transition: filter .6s var(--ease-out);
 }
+
+.hero-photo:hover .photo-img,
+.hero-photo:focus-within .photo-img { filter: none; }
 
 .hero-mug-fallback {
   display: none;
@@ -218,9 +225,9 @@
   grid-column: 9 / span 3;
   grid-row: 2;
   justify-self: start;
-  align-self: start;
+  align-self: end;
   z-index: 3;
-  margin-top: -40px;
+  margin-bottom: -56px;
   font-size: 1.15rem;
   mix-blend-mode: difference;
 }
@@ -232,31 +239,10 @@
 }
 
 .hero-lead {
-  position: relative;
   max-width: 46ch;
   color: var(--bone);
   font: 400 clamp(1.02rem, 1.45vw, 1.22rem)/1.65 var(--font-mono);
 }
-
-/* typewriter: an invisible copy keeps the space, the typed copy sits on top */
-.type-ghost { visibility: hidden; }
-
-.type-live {
-  position: absolute;
-  inset: 0;
-}
-
-.type-caret {
-  display: inline-block;
-  width: .55em;
-  height: 1.05em;
-  margin-left: 2px;
-  background: currentColor;
-  vertical-align: -.18em;
-  animation: blink 1s steps(1) infinite;
-}
-
-.type-caret.is-done { animation: blink 1s steps(1) 3 forwards; }
 
 .hero-actions {
   display: flex;
@@ -266,10 +252,9 @@
 }
 
 .hero-cue {
-  grid-column: 7 / -1;
-  grid-row: 3;
-  justify-self: end;
-  margin-top: 28px;
+  position: absolute;
+  right: calc(var(--gutter) + var(--rail));
+  bottom: clamp(24px, 4vh, 40px);
   color: var(--smoke);
   font-size: 1.6rem;
   line-height: 1;
@@ -286,7 +271,8 @@
   .hero {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
-    padding-top: 96px;
+    padding-top: 84px;
+    padding-bottom: clamp(24px, 4vw, 40px);
   }
 
   .hero-name,
@@ -298,8 +284,6 @@
     grid-row: auto;
   }
 
-  .hero-name { padding-top: 36px; }
-
   .hero-photo {
     justify-self: start;
     width: min(58vw, 250px);
@@ -309,11 +293,17 @@
   .hero-stamp {
     justify-self: end;
     margin-top: -220px;
+    margin-bottom: 0;
     font-size: .8rem;
   }
 
   .hero-brief { margin-top: 36px; }
-  .hero-cue { justify-self: start; }
+
+  .hero-cue {
+    position: static;
+    justify-self: start;
+    margin-top: 28px;
+  }
 
   .clue--hero {
     top: 38%;
@@ -526,9 +516,11 @@
   counter-increment: exhibit;
 }
 
-.exhibit:nth-of-type(3n + 1) { grid-column: 1 / span 5; --tilt: -2.5deg; }
-.exhibit:nth-of-type(3n + 2) { grid-column: 7 / span 5; --tilt: 2deg; margin-top: 110px; }
-.exhibit:nth-of-type(3n)     { grid-column: 3 / span 6; --tilt: -1deg; margin-top: -30px; }
+/* a staggered two-column zig-zag: the right column hangs lower, the second row tucks up under the first */
+.exhibit:nth-of-type(4n + 1) { grid-column: 1 / span 5; --tilt: -2.5deg; }
+.exhibit:nth-of-type(4n + 2) { grid-column: 7 / span 5; --tilt: 2deg; margin-top: 110px; }
+.exhibit:nth-of-type(4n + 3) { grid-column: 2 / span 5; --tilt: 1.5deg; margin-top: -90px; }
+.exhibit:nth-of-type(4n)     { grid-column: 8 / span 5; --tilt: -1.5deg; margin-top: 20px; }
 
 .pin {
   position: absolute;
@@ -548,10 +540,33 @@
   transform: rotate(calc(var(--tilt) * -.7));
 }
 
-.exhibit:nth-of-type(3n + 2) .exhibit-tag { margin: -8px auto 0 0; }
+.exhibit:nth-of-type(even) .exhibit-tag { margin: -8px auto 0 0; }
 
-/* the tag hangs left on this one, so the label moves right to stay visible */
-.exhibit:nth-of-type(3n + 2) .exhibit-no { text-align: right; }
+/* the tag hangs left on these, so the label moves right to stay visible */
+.exhibit:nth-of-type(even) .exhibit-no { text-align: right; }
+
+/* "to be released" stamp across the corner of an upcoming project's photo */
+.exhibit-stamp {
+  --tilt: -8deg;
+  position: absolute;
+  left: -14px;
+  bottom: 62px;
+  z-index: 3;
+  background: rgb(10 10 10 / .62);
+  font-size: .9rem;
+}
+
+/* stands in for the "Visit the scene" link until there is a scene to visit */
+.case-sealed {
+  display: inline-block;
+  margin-top: 18px;
+  padding-bottom: 4px;
+  border-bottom: 2px dashed #8a8a8a;
+  color: #6a6a6a;
+  font: 400 .88rem/1 var(--font-type);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 
 .exhibit-kind {
   margin-bottom: 10px;
@@ -697,7 +712,7 @@
   .contact-sheet { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---- Public records ---- */
+/* ---- Open source ---- */
 
 .record {
   display: grid;
@@ -717,7 +732,6 @@
   aspect-ratio: 5 / 4;
   object-fit: contain;
   background: #1e1e1e;
-  filter: none;
 }
 
 .record-sheet {
@@ -772,21 +786,34 @@
   .record { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---- Surveillance tape ---- */
+/* ---- Videos: a wall of CCTV monitors ---- */
 
-.monitor {
-  max-width: 920px;
-  margin: 0 auto;
+.monitor-wall {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px clamp(18px, 2.4vw, 32px);
+  counter-reset: tape;
 }
+
+@media (max-width: 999px) {
+  .monitor-wall {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+.monitor { counter-increment: tape; }
 
 .monitor-screen {
   position: relative;
+  container-type: inline-size; /* the on-screen text scales with the screen, not the page */
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border: 16px solid #1d1d1d;
-  border-radius: 22px;
+  border: 10px solid #1d1d1d;
+  border-radius: 16px;
   background: #000;
-  box-shadow: 0 0 0 2px #2c2c2c, 0 40px 60px -30px #000;
+  box-shadow: 0 0 0 2px #2c2c2c, 0 34px 50px -28px #000;
 }
 
 .monitor-screen::after {
@@ -828,19 +855,21 @@
   align-items: center;
   gap: 8px;
   color: var(--white);
-  font: 400 clamp(.72rem, 1.6vw, 1rem)/1 var(--font-mono);
-  letter-spacing: .12em;
+  font: 400 clamp(.6rem, 3.4cqi, 1rem)/1 var(--font-mono);
+  letter-spacing: .1em;
   text-shadow: 0 0 6px rgb(255 255 255 / .6);
 }
 
-.osd--rec { top: 18px; left: 20px; }
-.osd--cam { top: 18px; right: 20px; }
-.osd--play { bottom: 18px; left: 20px; }
-.osd--time { bottom: 18px; right: 20px; }
+.osd--rec { top: 5cqi; left: 5cqi; }
+.osd--cam { top: 5cqi; right: 5cqi; }
+.osd--play { bottom: 5cqi; left: 5cqi; }
+.osd--time { bottom: 5cqi; right: 5cqi; }
+
+.osd--cam::before { content: "CAM " counter(tape, decimal-leading-zero); }
 
 .osd--rec i {
-  width: 10px;
-  height: 10px;
+  width: .7em;
+  height: .7em;
   border-radius: 50%;
   background: var(--white);
   animation: blink 1.2s steps(1) infinite;
@@ -857,11 +886,16 @@
 
 .monitor-label {
   margin-top: 16px;
-  color: var(--smoke);
-  font: 400 .76rem/1 var(--font-type);
-  letter-spacing: .18em;
+  color: var(--fog);
+  font: 400 .76rem/1.5 var(--font-type);
+  letter-spacing: .14em;
   text-align: center;
   text-transform: uppercase;
+}
+
+.monitor-label::before {
+  content: "Tape " counter(tape, decimal-leading-zero) " \00B7  ";
+  color: var(--smoke);
 }
 
 /* =============== 03 · Tip line =============== */

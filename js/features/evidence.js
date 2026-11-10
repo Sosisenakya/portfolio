@@ -1,5 +1,5 @@
 // Everything in the Evidence section: folder tabs, the string on the project board,
-// the photo viewer and the surveillance tape
+// the photo viewer and the videos
 
 import { sfx } from "../core/audio.js";
 
@@ -7,7 +7,7 @@ export function initEvidence() {
   initTabs();
   initBoard();
   initViewer();
-  initTape();
+  initVideos();
 }
 
 // ---- Folder tabs ----
@@ -61,8 +61,9 @@ function initBoard() {
     });
     if (!pins.length) return;
 
-    // pin to pin, closing the loop, each string sagging a little
-    const route = pins.length > 2 ? [...pins, pins[0]] : pins;
+    // pin to pin, each string sagging a little. Three pins close into a triangle,
+    // more than that run as a zig-zag chain so the strings don't cross each other
+    const route = pins.length === 3 ? [...pins, pins[0]] : pins;
     let path = "";
     for (let i = 0; i < route.length - 1; i++) {
       const a = route[i];
@@ -135,24 +136,28 @@ function openViewer(img) {
   sfx.paper();
 }
 
-// ---- Surveillance tape: live timestamp, YouTube loads only after a click ----
-function initTape() {
-  const clock = document.querySelector("[data-clock]");
-  if (clock) {
+// ---- Videos: live timestamp on every screen, YouTube loads only after a click ----
+function initVideos() {
+  const clocks = [...document.querySelectorAll("[data-clock]")];
+  if (clocks.length) {
     const pad = (n) => String(n).padStart(2, "0");
     const tick = () => {
       const d = new Date();
-      clock.textContent = `${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      const stamp = `${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+      clocks.forEach((clock) => (clock.textContent = stamp));
     };
     tick();
     setInterval(tick, 1000);
   }
 
   document.querySelectorAll(".video-facade").forEach((facade) => {
+    const title = facade.closest(".monitor")?.querySelector("figcaption")?.textContent.trim() || "Video";
+    facade.setAttribute("aria-label", `Play video: ${title}`);
+
     facade.addEventListener("click", () => {
       const frame = document.createElement("iframe");
       frame.src = `https://www.youtube-nocookie.com/embed/${facade.dataset.videoId}?autoplay=1&rel=0`;
-      frame.title = "Video";
+      frame.title = title;
       frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
       frame.allowFullscreen = true;
       facade.replaceWith(frame);

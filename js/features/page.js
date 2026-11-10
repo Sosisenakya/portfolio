@@ -1,5 +1,5 @@
-// Page-wide behaviour: the section index, smooth scrolling, scroll reveals, the typewriter
-// line on the cover, the stamp, redactions, the tilting calling card and the sound switch
+// Page-wide behaviour: the section index, smooth scrolling, scroll reveals, the stamp on the
+// cover, redactions, the tilting calling card and the sound switch
 
 import { sfx, isMuted, setMuted } from "../core/audio.js";
 import { tween, ease } from "../core/util.js";
@@ -18,40 +18,7 @@ export function initPage() {
 
 // What happens on the cover once the doors open
 function onCaseOpened() {
-  const lead = document.querySelector("[data-typewriter]");
-  if (lead) setTimeout(() => typewrite(lead), 900);
   if (document.querySelector("[data-hero-stamp]")) setTimeout(() => sfx.stamp(), 1600);
-}
-
-// ---- Typewriter ----
-// An invisible copy of the text keeps the paragraph's size so nothing jumps while it types
-function typewrite(el) {
-  const text = el.textContent.trim().replace(/\s+/g, " ");
-  const readable = document.createElement("span");
-  readable.className = "visually-hidden";
-  readable.textContent = text;
-  const ghost = document.createElement("span");
-  ghost.className = "type-ghost";
-  ghost.setAttribute("aria-hidden", "true");
-  ghost.textContent = text;
-  const live = document.createElement("span");
-  live.className = "type-live";
-  live.setAttribute("aria-hidden", "true");
-  const typed = document.createElement("span");
-  const caret = document.createElement("span");
-  caret.className = "type-caret";
-  live.append(typed, caret);
-  el.replaceChildren(readable, ghost, live);
-
-  let i = 0;
-  const next = () => {
-    i += 1;
-    typed.textContent = text.slice(0, i);
-    if (text[i - 1] !== " ") sfx.type();
-    if (i < text.length) setTimeout(next, /[,.!]/.test(text[i - 1]) ? 220 : 24 + Math.random() * 46);
-    else caret.classList.add("is-done");
-  };
-  next();
 }
 
 // ---- Section index ----
@@ -93,6 +60,33 @@ function initIndex() {
 }
 
 // ---- Smooth scrolling for in-page links ----
+
+// Room to leave at the top of the screen: below the Index button on phones, a small margin elsewhere
+function topClearance() {
+  const toggle = document.querySelector(".index-toggle");
+  const box = toggle?.getBoundingClientRect();
+  return box && box.height ? box.bottom + 16 : 24;
+}
+
+// Where to scroll so a section's content (its padding left out) sits in the middle of the screen
+// When it is taller than the screen, its heading lands at the top instead. Works for any screen size
+function scrollTargetFor(target) {
+  if (target.id === "top") return 0;
+  const style = getComputedStyle(target);
+  const padTop = parseFloat(style.paddingTop) || 0;
+  const padBottom = parseFloat(style.paddingBottom) || 0;
+  const box = target.getBoundingClientRect();
+  const contentTop = box.top + window.scrollY + padTop;
+  const contentHeight = box.height - padTop - padBottom;
+  const view = window.innerHeight;
+  const clearance = topClearance();
+
+  const fits = contentHeight <= view - clearance * 2;
+  const y = fits ? contentTop - (view - contentHeight) / 2 : contentTop - clearance;
+  const maxY = document.documentElement.scrollHeight - view;
+  return Math.min(Math.max(0, y), Math.max(0, maxY));
+}
+
 function initSmoothScroll() {
   let running = null;
 
@@ -104,9 +98,8 @@ function initSmoothScroll() {
     if (!target) return;
     event.preventDefault();
 
-    const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
     const startY = window.scrollY;
-    const endY = Math.max(0, target.getBoundingClientRect().top + startY - offset);
+    const endY = scrollTargetFor(target);
     const distance = endY - startY;
     const token = {};
     running = token;

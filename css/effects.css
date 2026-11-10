@@ -5,34 +5,45 @@
    reveals and every @keyframes on the site
    ========================================================= */
 
-/* ---------- Flashlight ---------- */
+/* ---------- Darkness and flashlight ----------
+   The room is a sheet of near-black with holes cut in it by a mask
+   - no flashlight yet: two small glows, one on the light cord, one on the flashlight
+   - flashlight picked up (html.has-torch) or during the intro: one beam that follows the pointer
+   - lights on: the sheet fades away
+   --cord-x/y and --torch-x/y are set by js/features/flashlight.js */
 
 .darkness {
   --beam: clamp(240px, 27vw, 420px);
-  --dark: .86;
+  --dark: .975;
   position: fixed;
   inset: 0;
   z-index: 110;
   pointer-events: none;
-  background:
-    radial-gradient(circle calc(var(--beam) * .55) at var(--fx) var(--fy), rgb(255 255 255 / .045), transparent),
-    radial-gradient(circle var(--beam) at var(--fx) var(--fy),
-      rgb(6 6 6 / 0) 0%,
-      rgb(6 6 6 / 0) 30%,
-      rgb(6 6 6 / calc(var(--dark) * .55)) 62%,
-      rgb(6 6 6 / var(--dark)) 100%);
+  background: rgb(5 5 5 / var(--dark));
+  -webkit-mask-image:
+    radial-gradient(circle 150px at var(--cord-x, -500px) var(--cord-y, -500px), rgb(0 0 0 / .3) 0, #000 100%),
+    radial-gradient(circle 190px at var(--torch-x, -500px) var(--torch-y, -500px), rgb(0 0 0 / .25) 0, #000 100%);
+  mask-image:
+    radial-gradient(circle 150px at var(--cord-x, -500px) var(--cord-y, -500px), rgb(0 0 0 / .3) 0, #000 100%),
+    radial-gradient(circle 190px at var(--torch-x, -500px) var(--torch-y, -500px), rgb(0 0 0 / .25) 0, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   transition: opacity .8s ease;
 }
 
+html.intro-open .darkness,
+html.has-torch .darkness {
+  -webkit-mask-image: radial-gradient(circle var(--beam) at var(--fx) var(--fy), transparent 0, transparent 30%, rgb(0 0 0 / .55) 62%, #000 100%);
+  mask-image: radial-gradient(circle var(--beam) at var(--fx) var(--fy), transparent 0, transparent 30%, rgb(0 0 0 / .55) 62%, #000 100%);
+}
+
 html.intro-open .darkness { --dark: .62; }
+html.has-torch .darkness { --dark: .96; }
 html.lights-on .darkness { opacity: 0; }
 
-/* Phones: a wider, softer beam that follows your finger */
+/* Phones: a wider beam that follows your finger */
 @media (hover: none), (pointer: coarse) {
-  .darkness {
-    --beam: 85vmax;
-    --dark: .72;
-  }
+  .darkness { --beam: 75vmax; }
 }
 
 /* ---------- Film grain ---------- */
@@ -76,6 +87,50 @@ html.intro-open .index {
 }
 
 .index { transition: opacity .6s .5s, visibility 0s .5s; }
+
+/* the flashlight lying on the floor, waiting to be picked up */
+.torch {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 4vh, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 0;
+  background: none;
+  translate: -50% 0;
+  animation: torch-nudge 2.8s ease-in-out infinite;
+}
+
+.torch-icon {
+  width: 104px;
+  height: 36px;
+  transform: rotate(-8deg);
+  filter: drop-shadow(0 0 14px rgb(255 255 255 / .35));
+  transition: transform .3s var(--ease-spring);
+}
+
+.torch:hover .torch-icon { transform: rotate(-2deg) scale(1.08); }
+
+.torch-label {
+  color: var(--white);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+html.has-torch .torch,
+html.lights-on .torch { display: none; }
+
+@media (max-width: 899px) {
+  .torch {
+    left: auto;
+    right: 12px;
+    bottom: 64px;
+    translate: none;
+  }
+}
 
 /* pull-cord light switch */
 .cord {
@@ -275,25 +330,6 @@ html.intro-open .index {
   translate: none;
 }
 
-/* ticks draw themselves in, one after another */
-.js .mo-sheet .mo-list li::before {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path .45s var(--ease-out);
-  transition-delay: calc(var(--n, 0) * 140ms + 350ms);
-}
-
-.js .mo-sheet.is-in .mo-list li::before { clip-path: inset(0); }
-
-.js .mo-list--no li::after {
-  transform: scaleX(0);
-  transition: transform .6s .5s var(--ease-out);
-}
-
-.js .mo-declined.is-in .mo-list--no li::after { transform: none; }
-
-.js .mo-stamp { opacity: 0; }
-.js .mo-declined.is-in .mo-stamp { animation: stamp-in .5s 1s var(--ease-out) both; }
-
 /* ---------- Keyframes ---------- */
 
 @keyframes fade-in {
@@ -335,12 +371,9 @@ html.intro-open .index {
   to { opacity: 1; filter: none; transform: none; }
 }
 
-@keyframes swing {
-  0% { transform: rotate(var(--tilt, 0deg)); }
-  18% { transform: rotate(calc(var(--tilt, 0deg) + 5deg)); }
-  42% { transform: rotate(calc(var(--tilt, 0deg) - 3.5deg)); }
-  66% { transform: rotate(calc(var(--tilt, 0deg) + 1.8deg)); }
-  100% { transform: rotate(var(--tilt, 0deg)); }
+@keyframes torch-nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes cord-pull {

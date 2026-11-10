@@ -108,9 +108,7 @@
       <li><a href="#top"><span>00</span> Cover</a></li>
       <li><a href="#about"><span>01</span> Subject</a></li>
       <li><a href="#work"><span>02</span> Evidence</a></li>
-      <li><a href="#services"><span>03</span> Methods</a></li>
-      <li><a href="#process"><span>04</span> Procedure</a></li>
-      <li><a href="#contact"><span>05</span> Tip line</a></li>
+      <li><a href="#contact"><span>03</span> Tip line</a></li>
     </ol>
   </nav>
 
@@ -118,24 +116,17 @@
        COVER
        ===================================================== -->
   <header class="hero" id="top">
-    <div class="hero-docket" data-enter style="--i:0">
-      <span>Dept. of Roblox Development</span>
-      <span>Case No. 0417</span>
-      <span>Status <b>Open</b></span>
-      <span>Filed <span data-year>2026</span></span>
-    </div>
-
     <h1 class="hero-name" tabindex="-1" data-intro-exit>
       <span class="hero-kicker" data-enter style="--i:1">Subject &mdash;</span>
       <span class="hero-alias" data-enter style="--i:2">Sosisenakya</span>
       <span class="hero-role" data-enter style="--i:3">Roblox Developer &middot; Scripting &amp; UI</span>
     </h1>
 
-    <!-- EDIT: profile picture lives at assets/brand/profile.png -->
+    <!-- EDIT: profile picture lives at assets/brand/profile.jpg -->
     <figure class="photo hero-photo" data-enter style="--i:4">
       <span class="tape" aria-hidden="true"></span>
       <div class="hero-mug">
-        <img class="photo-img" src="assets/brand/profile.png" alt="Sosisenakya's profile picture" onerror="this.closest('figure').classList.add('is-missing')">
+        <img class="photo-img" src="assets/brand/profile.jpg" alt="Sosisenakya's profile picture" onerror="this.closest('figure').classList.add('is-missing')">
         <svg class="hero-mug-fallback" viewBox="0 0 64 64" aria-hidden="true"><use href="#i-mark"/></svg>
       </div>
       <figcaption class="hand">the subject, 4 yrs on the job</figcaption>
@@ -353,82 +344,11 @@
     </section>
 
     <!-- =====================================================
-         03 · MODUS OPERANDI (services)
-         ===================================================== -->
-    <section class="section methods" id="services" aria-labelledby="services-title">
-      <header class="case-head" data-reveal>
-        <p class="case-no">No. 03</p>
-        <h2 class="case-title" id="services-title">Modus operandi</h2>
-        <p class="case-aside hand">what they do, and what they won't</p>
-      </header>
-
-      <div class="mo-grid">
-        <div class="paper mo-sheet" data-reveal>
-          <p class="mo-label">Known methods</p>
-          <!-- EDIT: what you build -->
-          <ul class="mo-list" data-stagger>
-            <li>Clean UI Effects</li>
-            <li>Modular systems using SSA, OOP, or ECS</li>
-            <li>Performance-critical systems</li>
-            <li>Combat systems (FPS, Battleground)</li>
-            <li>Anti-Cheat</li>
-          </ul>
-        </div>
-
-        <div class="mo-declined" data-reveal>
-          <p class="mo-label">Will not take on</p>
-          <!-- EDIT: what you don't take -->
-          <ul class="mo-list mo-list--no" data-stagger>
-            <li>Physics-Heavy System (Advanced Movement, Vehicle, etc)</li>
-          </ul>
-          <p class="stamp mo-stamp">Declined</p>
-          <button class="clue clue--methods" type="button" data-clue="clean, modular code"><svg viewBox="0 0 48 60"><use href="#i-print"/></svg></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================
-         04 · PROCEDURE (process)
-         ===================================================== -->
-    <section class="section procedure" id="process" aria-labelledby="process-title">
-      <header class="case-head" data-reveal>
-        <p class="case-no">No. 04</p>
-        <h2 class="case-title" id="process-title">Procedure</h2>
-        <p class="case-aside hand">how a case goes</p>
-      </header>
-
-      <div class="line" data-reveal>
-        <svg class="line-wire" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 8 Q500 66 1020 8"/></svg>
-        <!-- EDIT: your steps -->
-        <ol class="slips">
-          <li class="slip">
-            <span class="slip-pin" aria-hidden="true"></span>
-            <span class="slip-no">01</span>
-            <h3>Send an overview</h3>
-            <p>Tell me what you need, with references, a budget range and a deadline<br>I'll reply with questions and whether it's a good fit</p>
-          </li>
-          <li class="slip">
-            <span class="slip-pin" aria-hidden="true"></span>
-            <span class="slip-no">02</span>
-            <h3>Agree on scope and price</h3>
-            <p>We settle the features, milestones, total cost and payment terms before any work begins</p>
-          </li>
-          <li class="slip">
-            <span class="slip-pin" aria-hidden="true"></span>
-            <span class="slip-no">03</span>
-            <h3>Build, review and deliver</h3>
-            <p>I share progress along the way, take your feedback, then hand over the finished project/code</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- =====================================================
-         05 · TIP LINE (contact)
+         03 · TIP LINE (contact)
          ===================================================== -->
     <section class="section tipline" id="contact" aria-labelledby="contact-title">
       <header class="case-head" data-reveal>
-        <p class="case-no">No. 05</p>
+        <p class="case-no">No. 03</p>
         <h2 class="case-title" id="contact-title">Tip line</h2>
         <p class="case-aside hand">got a case? report it here</p>
       </header>
@@ -472,6 +392,17 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="hud">
+    <!-- The room is pitch black until you pick this up (js/features/flashlight.js) -->
+    <button class="torch" type="button" data-torch aria-pressed="false" aria-label="Pick up the flashlight">
+      <svg class="torch-icon" viewBox="0 0 120 40" aria-hidden="true">
+        <path d="M6 12h58l14-8h30v32H78l-14-8H6a4 4 0 0 1-4-4v-8a4 4 0 0 1 4-4z" fill="#2b2b2b" stroke="#8c8c8c" stroke-width="2"/>
+        <path d="M18 14v12M26 14v12M34 14v12M42 14v12" stroke="#555" stroke-width="2"/>
+        <rect x="50" y="15" width="8" height="10" rx="2" fill="#bdbdba"/>
+        <rect x="104" y="6" width="6" height="28" rx="2" fill="#f7f7f5"/>
+      </svg>
+      <span class="torch-label hand">pick me up</span>
+    </button>
+
     <button class="cord" type="button" data-lights aria-pressed="false" aria-label="Turn the room lights on">
       <span class="cord-string"></span>
       <span class="cord-pull"></span>

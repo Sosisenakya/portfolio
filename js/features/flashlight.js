@@ -45,8 +45,32 @@ export function initFlashlight() {
   );
   apply();
 
-  // ---- Light cord ----
+  // ---- Glows: before the flashlight is picked up, only the cord and the flashlight are lit ----
   const cord = document.querySelector("[data-lights]");
+  const torch = document.querySelector("[data-torch]");
+
+  const placeGlow = (el, name) => {
+    if (!el || !el.offsetParent) return;
+    const r = el.getBoundingClientRect();
+    root.style.setProperty(`--${name}-x`, `${(r.left + r.width / 2).toFixed(0)}px`);
+    root.style.setProperty(`--${name}-y`, `${(r.top + r.height / 2).toFixed(0)}px`);
+  };
+  const placeGlows = () => {
+    placeGlow(cord?.querySelector(".cord-pull"), "cord");
+    placeGlow(torch, "torch");
+  };
+  window.addEventListener("resize", placeGlows);
+  document.addEventListener("case:opened", () => setTimeout(placeGlows, 700));
+  placeGlows();
+
+  torch?.addEventListener("click", () => {
+    aim(torch.getBoundingClientRect().left + torch.offsetWidth / 2, torch.getBoundingClientRect().top);
+    root.classList.add("has-torch");
+    torch.setAttribute("aria-pressed", "true");
+    sfx.click();
+  });
+
+  // ---- Light cord ----
   if (!cord) return;
 
   const setLights = (on) => {

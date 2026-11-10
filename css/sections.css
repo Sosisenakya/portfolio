@@ -556,18 +556,6 @@
   font-size: .9rem;
 }
 
-/* stands in for the "Visit the scene" link until there is a scene to visit */
-.case-sealed {
-  display: inline-block;
-  margin-top: 18px;
-  padding-bottom: 4px;
-  border-bottom: 2px dashed #8a8a8a;
-  color: #6a6a6a;
-  font: 400 .88rem/1 var(--font-type);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
 .exhibit-kind {
   margin-bottom: 10px;
   color: #5c5c5c;
